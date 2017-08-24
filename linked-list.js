@@ -8,8 +8,7 @@ let LinkedList = function() {
 }
 
 let LinkedListNode = function() {
-  this.value = undefined;
-  this.nextNode = undefined;
+  this.value, this.nextNode = undefined;
 }
 
 //Prototype pseudoneoclassical Instantiation functions
