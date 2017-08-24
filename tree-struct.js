@@ -9,3 +9,5 @@ Tree.prototype.addChild = function(value) {
   let newTree = new Tree(value);
   this.children.push(newTree);
 };
+
+//Change
