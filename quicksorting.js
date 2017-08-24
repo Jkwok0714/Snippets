@@ -1,3 +1,7 @@
+//=======================
+//  QUICK SORTING
+//=======================
+
 function quickSort(arr, low, high) {
   if (low < high) {
     //The PARTITION will find out where to divide the array in half by the pivot (current high value)
@@ -34,7 +38,10 @@ function partition(arr, low, high) {
 }
 
 
+
+//============================
 //Below are just functions to test and demo the quicksort.
+//============================
 
 function ran() {
   return Math.floor(Math.random()*1000);

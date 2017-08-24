@@ -10,4 +10,4 @@ Tree.prototype.addChild = function(value) {
   this.children.push(newTree);
 };
 
-//Change
+//Changed stuff
