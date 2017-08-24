@@ -1,5 +1,8 @@
 //herro
 
+//Test implementation of linked list from scratch
+
+//Instantiators
 let LinkedList = function() {
   this.head, this.tail = undefined;
 }
@@ -9,6 +12,7 @@ let LinkedListNode = function() {
   this.nextNode = undefined;
 }
 
+//Prototype pseudoneoclassical Instantiation functions
 LinkedList.prototype.addToTail = function(value) {
   let newNode = new LinkedListNode();
   newNode.value = value;
