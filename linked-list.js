@@ -57,9 +57,9 @@ LinkedList.prototype.print = function() {
 
 //Test stuff
 let itinerary = new LinkedList();
-itinerary.addToTail('Item 1');
-itinerary.addToTail('Item 2');
-itinerary.addToTail('Item 3');
-itinerary.addToTail('Item 4');
+itinerary.addToTail('Paris');
+itinerary.addToTail('Sarasota');
+itinerary.addToTail('Xi\'an');
+itinerary.addToTail('Rio');
 console.log('Linked list has', itinerary.print());
 console.log('Removing head gets', itinerary.removeHead());
