@@ -42,7 +42,7 @@ function partition(arr, low, high) {
 //============================
 //Below are just functions to test and demo the quicksort.
 //============================
-
+/*
 function ran() {
   return Math.floor(Math.random()*1000);
 }
@@ -63,3 +63,4 @@ let inputArr = fillArray(10);
 console.log('Array before sort:',inputArr);
 quickSort(inputArr, 0, inputArr.length-1);
 console.log('Array after sort:', inputArr);
+*/

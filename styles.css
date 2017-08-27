@@ -1,4 +1,13 @@
 h1 {
+  font-family: verdana;
+}
+.jsLog, .uiButton {
   color: #4286f4;
   font-family: verdana;
+  font-size: 9px;
+}
+.themeBreak {
+  color: #4286f4;
+  font-family: verdana;
+  font-weight: 'bold';
 }
