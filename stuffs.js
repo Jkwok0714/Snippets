@@ -1,16 +1,21 @@
 let main = function() {
-
-  var amount = 50;
-  var array = createIncrementingArray(amount);
-  // debugger;
-  runCount = 0;
-  var searchFor = Math.floor(Math.random() * amount)*2;
+  //Take the seed from an input box in the html
+  var amount = $('#seed').val();
+  resetInfiniteRecursionProtection();
   htmlThemeChange('Binary Search Test');
-  htmlLog('Search for',searchFor,'in an array of',amount,'numbers');
+  var array = createIncrementingArray(amount);
+  helperLog('Made an array of',amount,'elements');
+  var searchFor = Math.floor(Math.random() * amount)*2;
+  htmlLog('Search for',searchFor,'in an array of numbers 1 thru',amount);
   htmlLog('Found:', binarySearch(array, searchFor));
 
 
-  //makeRerunButton();
+  //Signify end of main
+  $('<hr>').appendTo($('#scrollbox'));
+};
+
+let loadAllScripts = function() {
+  appendScript('tree-struct.js');
 };
 
 
@@ -22,14 +27,28 @@ let main = function() {
 //   $rerunButton.appendTo($body);
 // };
 
+var appendScript = function(scriptName) {
+  var $head = $('head');
+  var $newScript = $('<script src="' + scriptName + '"></script>');
+  $head.append($newScript);
+}
+
 var htmlLog = function(...args) {
+  printHtmlLog('jsLog', ...args);
+}
+
+var helperLog = function(...args) {
+  printHtmlLog('helperLog', ...args);
+}
+
+var resetInfiniteRecursionProtection = function() {
+  runCount = 0;
+}
+
+var printHtmlLog = function(type, ...args) {
   var $body = $('#scrollbox');
   var result = args.join(' ');
-  // args.forEach(function(el) {
-  //   result +=
-  // });
-  // return result;
-  var $textBit = $('<div class="jsLog">' + result + '</div>');
+  var $textBit = $('<div class="' + type + '">' + result + '</div>');
   $textBit.appendTo($body);
 }
 
@@ -69,9 +88,15 @@ var createRandomArray = function(amount) {
 }
 
 //===jQuery Functionality=====
+var jQueryStuff = function() {
+  $('#rerunButton').on('click', main);
+
+};
+
 
 //====Make sure this is last==
 $(document).ready(function() {
+  loadAllScripts();
   main();
-  $('#rerunButton').on('click', main);
+  jQueryStuff();
 });
