@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Random Runner</title>
+  <script src="jquery.js"></script>
+  <script>
+  var scriptName;
+
+  var appendScript = function() {
+    var scriptName = $('#scriptField').val();
+    var $head = $('head');
+    var bit = ['<', '/'];
+    var $newScript = $('<script src="' + scriptName + '">' + bit.join('') + 'script>');
+    //$head.append($newScript);
+    $.getScript(scriptName);
+    localStorage.setItem('runnerCache', scriptName);
+  }
+
+  var jQueryStuff = function() {
+    $('#addScriptButton').on('click', appendScript);
+    $('#clearButton').on('click', () => {
+      delete localStorage['runnerCache'];
+    });
+  }
+
+  var getCachedName = function() {
+    var result = localStorage.getItem('runnerCache');
+    if (!result === null && !result === undefined) {
+      // scriptName = result;
+      $('#scriptField').val(result);
+    }
+  }
+
+  $(document).ready(function() {
+    getCachedName();
+    jQueryStuff();
+  });
+  </script>
+  <style>
+  h1 {
+    font-weight: bold;
+  }
+  .style1 {
+    font-size: 10px;
+  }
+  </style>
+</head>
+<body>
+  <h1>It Runs Stuff Lite</h1>
+  <hr>
+  <input class="style1" type="text" id="scriptField" placeholder='Script Path'>
+  <select class="style1">
+    <option value = "">-</option>
+    <option value="js">JavaScript</option>
+  </select>
+  <br><br>
+  <br>
+  <button class="style1" id="addScriptButton">Add/Revise</button>
+  <br>
+  <hr>
+  <span class="style1">Firefox: option+command+K for console</span><br>
+  <span class="style1">Chrome: option+command+J for console</span>
+  <br>
+  <button class="style1" id="clearButton">Clear Cached</button>
+</body>
+</html>
