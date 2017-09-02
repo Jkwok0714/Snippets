@@ -13,6 +13,8 @@ var numericToAlphabet = function (number) {
   }
   //Find how many segments of 3 there are
   var parts = stringified.length / 3;
+
+  //Track if this segment of three is thousands, millions, etc..
   var perThree = parts;
 
   for (var i = 0; i < parts; i++) {
@@ -39,83 +41,22 @@ var convertThreeDigits = function(stringifiedThreeDigits) {
     result.push(digitToText(stringifiedThreeDigits[1], 2));
     result.push(digitToText(stringifiedThreeDigits[2], 1));
   }
-  // console.log(result);
   return result;
 };
 
 var fillToThree = function(numString) {
-  var zeroes;
-  if (numString.length % 3 === 1) {
-    zeroes = '00';
-  } else {
-    zeroes = '0';
-  }
+  var zeroes = new Array(4 - (numString.length % 3)).join("0");
   var result = zeroes + numString;
-  console.log(result);
   return result;
 }
 
 var digitToText = function(digit, style) {
   if (style === 1) {
-    if (digit === '1') {
-      return 'one';
-    } else if (digit === '2') {
-      return 'two';
-    } else if (digit === '3') {
-      return 'three';
-    } else if (digit === '4') {
-      return 'four';
-    } else if (digit === '5') {
-      return 'five';
-    } else if (digit === '6') {
-      return 'six';
-    } else if (digit === '7') {
-      return 'seven';
-    } else if (digit === '8') {
-      return 'eight';
-    } else if (digit === '9') {
-      return 'nine';
-    }
+    return singleDigits[digit];
   } else if (style === 2) {
-    if (digit === '1') {
-      return 'ten';
-    } else if (digit === '2') {
-      return 'twenty';
-    } else if (digit === '3') {
-      return 'thirty';
-    } else if (digit === '4') {
-      return 'forty';
-    } else if (digit === '5') {
-      return 'fifty';
-    } else if (digit === '6') {
-      return 'sixty';
-    } else if (digit === '7') {
-      return 'seventy';
-    } else if (digit === '8') {
-      return 'eighty';
-    } else if (digit === '9') {
-      return 'ninety';
-    }
+    return tens[digit];
   } else if (style === 3) {
-    if (digit === '1') {
-      return 'eleven';
-    } else if (digit === '2') {
-      return 'twelve';
-    } else if (digit === '3') {
-      return 'thirteen';
-    } else if (digit === '4') {
-      return 'fourteen';
-    } else if (digit === '5') {
-      return 'fifteen';
-    } else if (digit === '6') {
-      return 'sixteen';
-    } else if (digit === '7') {
-      return 'seventeen';
-    } else if (digit === '8') {
-      return 'eighteen';
-    } else if (digit === '9') {
-      return 'nineteen';
-    }
+    return teens[digit];
   }
   return '';
 }
