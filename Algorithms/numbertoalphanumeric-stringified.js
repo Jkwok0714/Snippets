@@ -1,23 +1,34 @@
 //Turn 5000 to five thousand
 
-var singleDigits = [''];
-var teens = [''];
-var tens = [''];
+var singleDigits = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+var teens = ['', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+var tens = ['', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+var names = ['', 'thousand', 'million', 'billion', 'trillion', 'quadrillion', 'quintillion', 'sextillion'];
 
 var numericToAlphabet = function (number) {
   var stringified = number.toString();
   var result = [];
-  var names = ['thousand', 'million', 'billion', 'trillion', 'quadrillion', 'quintillion', 'sextillion'];
   if (stringified.length % 3 !== 0) {
     stringified = fillToThree(stringified);
   }
-  result = result.concat(convertThreeDigits(stringified)).filter((ele) => {
-    return ele != '';
-  });
+  //Find how many segments of 3 there are
+  var parts = stringified.length / 3;
+  var perThree = parts;
+
+  for (var i = 0; i < parts; i++) {
+    var miniString = stringified[0 + i * 3] + stringified[1 + i * 3] + stringified[2 + i * 3];
+    result = result.concat(convertThreeDigits(miniString)).filter((ele) => {
+      return ele != '';
+    });
+    if (miniString !== '000') result = result.concat(names[perThree - 1]);
+    perThree--;
+  }
+
   return result.join(' ');
 };
 
 var convertThreeDigits = function(stringifiedThreeDigits) {
+  // console.log(stringifiedThreeDigits);
   var result = [];
   if (stringifiedThreeDigits[0] !== '0') {
     result.push(digitToText(stringifiedThreeDigits[0], 1), 'hundred');
@@ -33,7 +44,14 @@ var convertThreeDigits = function(stringifiedThreeDigits) {
 };
 
 var fillToThree = function(numString) {
-  var result = (new Array(Math.floor(1 + (numString.length % 3))).join('0')) + numString;
+  var zeroes;
+  if (numString.length % 3 === 1) {
+    zeroes = '00';
+  } else {
+    zeroes = '0';
+  }
+  var result = zeroes + numString;
+  console.log(result);
   return result;
 }
 
@@ -107,7 +125,13 @@ var testIt = (input) => {
 }
 
 //Tests
-testIt(400);
-testIt(912);
-testIt(5);
-testIt(303);
+{
+  testIt(400);
+  testIt(912);
+  testIt(5);
+  testIt(3035);
+  //30,676,335
+  testIt(30676335);
+  testIt(52752);
+  testIt(6990004);
+}
