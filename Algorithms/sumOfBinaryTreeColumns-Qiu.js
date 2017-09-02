@@ -1,3 +1,5 @@
+
+
 var sumColumns = function(tree){
 
   var columnSums = {};
