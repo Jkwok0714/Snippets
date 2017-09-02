@@ -14,9 +14,6 @@ var generate = function(numRows) {
         if (currRow === 1) {
             solutionArray.push([1]);
             recursiveGenerate(currRow + 1);
-        } else if (currRow === 2) {
-            solutionArray.push([1, 1]);
-            recursiveGenerate(currRow + 1);
         } else if (currRow > numRows) {
             return;
         } else {
@@ -51,5 +48,9 @@ var logTriangle = (triangle) => {
   }
 };
 
-var test = generate(5);
+test = generate(2);
+logTriangle(test);
+var test = generate(3);
+logTriangle(test);
+test = generate(5);
 logTriangle(test);
