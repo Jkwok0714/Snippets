@@ -1,4 +1,4 @@
-
+// Solution by Jack Qiu
 
 var sumColumns = function(tree){
 
