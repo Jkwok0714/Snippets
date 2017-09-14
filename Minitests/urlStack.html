@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>title</title>
+    <script src="../Lib/jQuery.js"></script>
+  </head>
+  <body>
+    <!-- page content -->
+    <button id="backButton">&#8592;</button><button id="forwardButton">&#8594;</button>
+    <input id="submitText" type="text" placeholder="URL"><input id="submitButton" type="submit">
+    <br>
+    <div style="width:200px; height:150px; border:1px solid black;">
+    <h2>Back-URLS</h2>
+    <div id="backStack"></div></div>
+    <div style="width:200px; height:150px; border:1px solid black;">
+    <h2>Current</h2>
+    <div id="currStack"></div></div>
+    <div style="width:200px; height:150px; border:1px solid black;">
+    <h2>Forward-URLs</h2>
+    <div id="forwardStack"></div></div>
+  </body>
+
+  <script>
+  var backStack = [];
+  var forwardStack = [];
+  var currURL = undefined;
+
+  $('#backButton').click(function() {
+    if (backStack.length > 0) {
+    	targetURL = backStack.pop();
+      if (currURL !== undefined) {
+    		forwardStack.push(currURL);
+    	}
+    	currURL = targetURL;
+    }
+
+    refreshStacks();
+  });
+  $('#forwardButton').click(function() {
+  	if (forwardStack.length > 0) {
+    	targetURL = forwardStack.pop();
+      if (currURL !== undefined) {
+    		backStack.push(currURL);
+    	}
+    	currURL = targetURL;
+    }
+
+    refreshStacks();
+  });
+  $('#submitButton').click(function() {
+    handleSubmit();
+  });
+
+  var handleSubmit = function() {
+  	var inputURL = $('#submitText').val();
+    if (inputURL !== currURL && inputURL !== undefined) {
+    	if (currURL !== undefined) {
+      	backStack.push(currURL);
+        renderURL(currURL, 'back');
+      }
+    	currURL = inputURL;
+    	renderURL(currURL, 'curr');
+      $('#submitText').val('');
+      forwardStack = [];
+      $('#forwardStack').empty();
+    }
+  }
+
+	var refreshStacks = function() {
+  	$('#backStack').empty();
+    $('#forwardStack').empty();
+    for (var ele of backStack) {
+    	renderURL(ele, 'back');
+    }
+    for (var ele of forwardStack) {
+    	renderURL(ele, 'forward');
+    }
+    renderURL(currURL, 'curr');
+  }
+
+  var renderURL = function(urlInput, target) {
+    if (target === 'back') {
+      var $body = $('#backStack');
+    } else if (target === 'curr') {
+      var $body = $('#currStack');
+      $body.empty();
+    } else {
+      var $body = $('#forwardStack');
+    }
+    var $display = $('<span>' + urlInput + '</span><br>');
+    $body.prepend($display);
+  };
+
+  </script>
+</html>
