@@ -1,0 +1,12 @@
+ITOptions
+Program Files
+Program Files (x86)
+ProgramData
+temp
+Windows
+$Recycle.Bin
+DfsrPrivate
+System Volume Information
+MSOCache
+Windows.old
+Users\*\AppData\Local
