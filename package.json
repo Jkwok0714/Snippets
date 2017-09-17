@@ -1,0 +1,24 @@
+{
+  "name": "codesnippets",
+  "version": "1.0.0",
+  "description": "Useless stuff",
+  "main": "stuffs.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jkwok0714/Snippets.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jkwok0714/Snippets/issues"
+  },
+  "homepage": "https://github.com/Jkwok0714/Snippets#readme",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "node-cron": "^1.2.1",
+    "request": "^2.81.0"
+  }
+}

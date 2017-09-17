@@ -1,0 +1,27 @@
+200@Sat, 16 Sep 2017 22:46:21 GMT
+200@Sat, 16 Sep 2017 22:46:53 GMT
+200@Sat, 16 Sep 2017 22:46:55 GMT
+200@Sat, 16 Sep 2017 22:49:05 GMT
+200@Sat, 16 Sep 2017 22:49:11 GMT
+200@Sat, 16 Sep 2017 22:49:45 GMT
+200@Sat, 16 Sep 2017 22:49:50 GMT
+200@Sat, 16 Sep 2017 22:49:55 GMT
+200@Sat, 16 Sep 2017 22:50:00 GMT
+200@Sat, 16 Sep 2017 22:52:15 GMT
+Redundant log!Wrote result to file @./trashOutput/testFile.txt
+200@Sat, 16 Sep 2017 22:52:20 GMT
+Redundant log!Wrote result to file @./trashOutput/testFile.txt
+200@Sat, 16 Sep 2017 22:53:20 GMT
+Redundant log! Wrote result to file @./trashOutput/testFile.txt
+200@Sat, 16 Sep 2017 22:53:25 GMT
+Redundant log! Wrote result to file @./trashOutput/testFile.txt
+200@Sat, 16 Sep 2017 22:53:30 GMT
+Redundant log! Wrote result to file @./trashOutput/testFile.txt
+200@Sat, 16 Sep 2017 22:53:50 GMT
+Redundant log! Wrote result to file @./trashOutput/testFile.txt
+200@Sat, 16 Sep 2017 22:53:55 GMT
+Redundant log! Wrote result to file @./trashOutput/testFile.txt
+200@Sat, 16 Sep 2017 23:01:20 GMT
+Redundant log! Wrote result to file @./trashOutput/testFile.txt
+200@Sat, 16 Sep 2017 23:01:25 GMT
+Redundant log! Wrote result to file @./trashOutput/testFile.txt
