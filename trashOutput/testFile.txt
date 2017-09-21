@@ -25,3 +25,9 @@ Redundant log! Wrote result to file @./trashOutput/testFile.txt
 Redundant log! Wrote result to file @./trashOutput/testFile.txt
 200@Sat, 16 Sep 2017 23:01:25 GMT
 Redundant log! Wrote result to file @./trashOutput/testFile.txt
+200@Tue, 19 Sep 2017 00:56:46 GMT
+Redundant log! Wrote result to file @./trashOutput/testFile.txt
+200@Tue, 19 Sep 2017 00:56:50 GMT
+Redundant log! Wrote result to file @./trashOutput/testFile.txt
+200@Tue, 19 Sep 2017 00:56:55 GMT
+Redundant log! Wrote result to file @./trashOutput/testFile.txt
