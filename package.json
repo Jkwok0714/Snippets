@@ -18,8 +18,11 @@
   "homepage": "https://github.com/Jkwok0714/Snippets#readme",
   "dependencies": {
     "bluebird": "^3.5.0",
+    "nexmo": "^2.0.2",
     "node-cron": "^1.2.1",
     "redux": "^3.7.2",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "textbelt": "0.0.3",
+    "xml2js": "^0.4.19"
   }
 }
