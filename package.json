@@ -18,10 +18,14 @@
   "homepage": "https://github.com/Jkwok0714/Snippets#readme",
   "dependencies": {
     "bluebird": "^3.5.0",
+    "faker": "^4.1.0",
+    "mysql": "^2.15.0",
+    "mysql2": "^1.4.2",
     "nexmo": "^2.0.2",
     "node-cron": "^1.2.1",
     "redux": "^3.7.2",
     "request": "^2.81.0",
+    "sequelize": "^4.15.0",
     "textbelt": "0.0.3",
     "xml2js": "^0.4.19"
   }
