@@ -13,8 +13,11 @@ const users = db.define('users', {
   username: Sequelize.STRING,
   location: Sequelize.STRING,
   createdAt: Sequelize.DATE,
-  updatedAt: Sequelize.DATE
-});
+  updatedAt: Sequelize.DATE},
+  { indexes: [ { name: 'location_index', method: 'BTREE', fields: [ 'location', { attribute: 'username', order: 'DESC' } ] } ] }
+);
+
+//The indexing improved query time from 0.50s to 0.03s
 
 // exports.users = users;
 let makeNewUser = (n) => {
