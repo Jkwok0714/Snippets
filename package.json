@@ -17,9 +17,11 @@
   },
   "homepage": "https://github.com/Jkwok0714/Snippets#readme",
   "dependencies": {
+    "aws-sdk": "^2.140.0",
     "bluebird": "^3.5.0",
     "elasticsearch": "^13.3.1",
     "faker": "^4.1.0",
+    "http-aws-es": "^3.1.3",
     "mysql": "^2.15.0",
     "mysql2": "^1.4.2",
     "nexmo": "^2.0.2",
