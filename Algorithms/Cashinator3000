@@ -1,0 +1,178 @@
+//CASHINATOR 3000 Skeleton
+
+/*
+Use cases
+
+Below are the use cases and functional specification for The Cashinator 3000.
+
+    * As a cashier, I can initialize the cash register with a price list in a simple comma-delimited format. The price list contains product names, SKU's (stock-keeping units, i.e., the product id), the price per unit, and whether the product is taxable. (Staple groceries are typically not taxable.)
+    * As a cashier, I can initialize the register with a starting amount of money.
+    * As a cashier, I can initialize the register with a sales tax percentage.
+    * As a cashier, when I am not actively handling a customer transaction, I can choose to view the current balance of cash that the register contains.
+    * As a cashier, I can start a new transaction. Transactions have id's and are time-stamped upon creation.
+    * As a cashier, I can scan one item, whereupon that item is added to the transaction.
+    * As a customer, I can see the last item scanned and a running subtotal of the current transaction cost.
+    * As a cashier, I can input the money received from the customer, thus closing out the transaction.
+    *   Change is calculated to minimize the number of bills and coins that must be handled by the cashier.
+    * As a customer, I can see the grand total and how much change I am to receive.
+    * As a customer, I can see an itemized receipt of my purchases.
+    * As a cashier, I can view a report of all the transactions that have occurred since register initialization. Transactions are listed by id, # of items purchased, and the transaction amount.
+    As a cashier, I can search all items purchased since register initialization. I can do a partial string match on product name.
+
+Again, do not construct a user interface for this application -- but do create a clean API (not a client-server API, mind you, a code API) that will allow the future UI layer of The Cashinator 3000 to render the data in a variety of ways, decoupled from the business logic of generating that data.
+*/
+
+/* ==== API ====
+ new Register({
+  startingCash,
+  salesTax,
+  {RegisterItems}
+});
+
+new RegisterItem({
+  name,
+  sku,
+  price,
+  taxable (BOOLEAN)
+})
+
+new Transaction
+*/
+
+//A Helper function to assist in walking through a user through setting up a new register
+let initializeRegister = function() {
+  let params = {};
+  let startingItems = {};
+  //Set the params.cash property based on user input
+  //Set the params.salesTax property based on user input
+  //While the user doesn't hit cancel
+  //  Ask for name, SKU, price, and taxable BOOLEAN
+  //  Create a RegisterItem from the provided params and register it to the startingItems pool using SKU as key
+  let newReg = new Register(params);
+  return newReg;
+}
+
+class Register {
+  constructor (params) {
+    this.cash = params.startingCash;
+    this.salesTax = params.salesTax;
+    this.items = params.items;
+    this.transactions = {};
+    this.currentTransaction = null;
+    this.display = new RegisterView();
+  }
+
+  viewBalance () {
+    //Return the cash value
+  }
+
+  searchAllItems () {
+    
+  }
+
+  beginTransaction () {
+    //Check if current transaction is null
+    //  If not, error and ask for previous one to close
+    //Create a new transations object
+    //Assign it to the current transaction
+  }
+
+  viewAllTransactions () {
+    //For every transaction in transactions
+    //  Print out the ID, item amount and total
+  }
+
+  scanItem (itemSku) {
+    //If there's no current transaction, start one
+    //Get the item's price from the item list
+    //Add the item to the current transaction's item list, with SKU as key. Add quantity key
+    //If key already exists
+    //  Add to quantity
+    //Add the item's price to the running subtotal
+    //Add to the transaction's current items
+    //Call display's method with last item's name and current subtotal as a param
+    //Return the last item and current subtotal under transaction
+  }
+
+  closeTransaction () {
+    //Push transaction to transactions object using its ID as the key
+    //Set current transaction to null
+    //Return results of transaction's generate receipt method, passing in tax
+  }
+
+  calculateChange (amount) {
+    let change = {};
+    //Get the current total from the transaction
+    //For each possible bill and coin amount, starting from largest (100)
+    //  Divide amount by the bill to see how many of those bills can be used
+    //  Add the result of division to the change object to track it
+    //  Subtract from the remaining total to calculate
+    //Return change object
+  }
+
+  getTotal () {
+    //Call the current transaction's getTotal method, passing in the tax as param
+    //Call the display's method with total as param
+    //Return the value obtained from above
+  }
+
+  receiveMoney (amount) {
+    calculateChange(amount);
+    //Call the display's method with change as the param
+    //If change is greater than cash amount, alert the cashier
+    //Else, add total to cash amount
+    closeTransaction();
+    //Return results of calculateChange and Total to display on cashier's panel
+  }
+}
+
+class RegisterView {
+  constructor () {
+    this.currentDisplay = 'Welcome to Wal-Mart. My name is Fred.';
+  }
+
+  displayString (string) {
+    //display the string on cashier's panel, e.g. logging, return a var, etc.
+  }
+}
+
+class RegisterItem {
+  constructor (params) {
+    this.name = params.name;
+    this.sku = params.sku;
+    this.price = params.price;
+    this.taxable = params.taxable;
+  }
+}
+
+class Transaction {
+  constructor () {
+    this.time = Date.now();
+    this.id = generateID();
+    this.items = {};
+    this.totalItems = 0;
+    this.subtotal = 0;
+    this.total = 0;
+  }
+
+  getTotal (tax) {
+    let taxTotal = 0;
+    //For every item in items array
+    //  If item is taxable
+    //    add that item's price * tax to taxTotal
+    //Store to total
+    //Return subtotal + taxTotal
+  }
+
+  generateReceipt (tax) {
+    //For every item in the transaction
+    //  Print out the item name and price
+    //  Print subtotal
+    //  Print tax rate
+    //  Print grand total
+  }
+}
+
+let generateID = function() {
+  //Return some sort of ID hash
+}

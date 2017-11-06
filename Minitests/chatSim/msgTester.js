@@ -163,8 +163,6 @@ let generateUsers = (n) => {
   }
 };
 
-
-
 let createSession = () => {
   if (numSessions >= maxSessions) {
     finishSim();
@@ -257,5 +255,5 @@ let colorLog = (color, ...messages) => {
 
 };
 
-// ==== Run Everything ====
+// ==== RUN ALL THE THINGS ====
 main();
