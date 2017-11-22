@@ -7,7 +7,7 @@ const hasPathToSum = function(node, targetSum) {
   // your code here
   var currSum = node.value;
 
-  var recurse = function(iwoknnerNode, innerSum) {
+  var recurse = function(innerNode, innerSum) {
     for (var child of innerNode.children) {
       if (innerSum + child.value === targetSum) {
         return true;
