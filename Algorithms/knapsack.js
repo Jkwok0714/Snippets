@@ -43,3 +43,58 @@ var W = 50;
 var n = val.length;
 
 console.log(knapsack(W, wt, val, n));
+
+// ==== Original BRUTALO FORCE ====
+var knapsack = function(goods, maximumWeight) {
+    if (maximumWeight <= 0) return 0;
+    if (!Array.isArray(goods)) throw 'Goods should be an array';
+    let maximumWorth = 0;
+
+    let determineNext = (goodsLeft, worth, weight) => {
+      //base case: out of goods
+      if (goodsLeft.length === 0) {
+        return;
+      }
+      //Look for what can be taken
+      for (var i = 0; i < goodsLeft.length; i++) {
+        if (weight + goodsLeft[i].weight > maximumWeight) {
+          //base case: out of weight capacity
+          if (worth > maximumWorth) maximumWorth = worth;
+        } else {
+          //We can add this item. try adding it to weight and cost and see
+          //One optimization may be to temp store the item we took out
+          //  and put it back after recursive call instead of passing the array in
+          let newGoodsLeft = goodsLeft.slice(0).splice(i, 1);
+          determineNext(newGoodsLeft, worth + goodsLeft[i].price, weight + goodsLeft[i].weight);
+        }
+      }
+
+    }
+    determineNext(goods, 0, 0);
+
+    return '$' + maximumWorth;
+};
+
+//I'm guessing there will be a constraint of better time complexity soon
+
+// TODO: Write test cases!
+let goods = [
+  { id: 1, weight: 5, price: 10 },
+  { id: 2, weight: 1, price: 100 },
+  { id: 3, weight: 3, price: 50 },
+  { id: 4, weight: 2, price: 10 },
+  { id: 5, weight: 1, price: 400 },
+  { id: 6, weight: 3, price: 200 },
+  { id: 7, weight: 7, price: 3000 }
+  ];
+
+let weight;
+
+weight = 9;
+console.log('With weight ' + weight, knapsack(goods, weight));
+weight = 12;
+console.log('With weight ' + weight, knapsack(goods, weight));
+weight = 3;
+console.log('With weight ' + weight, knapsack(goods, weight));
+weight = 7;
+console.log('With weight ' + weight, knapsack(goods, weight));
