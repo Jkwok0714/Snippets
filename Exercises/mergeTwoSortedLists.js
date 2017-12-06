@@ -83,5 +83,6 @@ testList2.addToTail(7);
 testList2.addToTail(11);
 testList2.addToTail(13);
 testList2.addToTail(18);
+console.log('Merging', testList1.print(), 'and', testList2.print());
 let sortedList = sortedMerge(testList1, testList2);
 console.log(sortedList.print());
