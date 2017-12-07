@@ -36,3 +36,4 @@ let generateParenthesis = (num) => {
 
 console.log(generateParenthesis(2));
 console.log(generateParenthesis(3));
+console.log(generateParenthesis(4));
