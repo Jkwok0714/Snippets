@@ -13,9 +13,9 @@ let twoSum = (array, sum) => {
 }
 
 //====TESTS====
-let array, sum;
-array = [2, 4, 6, 1, 7];
-sum = 500;
-console.log(array, '-', sum, twoSum(array, sum));
-sum = 13;
-console.log(array, '-', sum, twoSum(array, sum));
+let testFunction = (arr, sum) => {
+  console.log(array, '-', sum, twoSum(array, sum));
+};
+
+testFunction([2, 4, 6, 1, 7], 500);
+testFunction([2, 4, 6, 1, 7], 13);

@@ -53,10 +53,14 @@ let getIntersection = (arr1, arr2) => {
 };
 
 //====TEST====
-let array1 = [1, 2, 5, 6, 8, 9, 10];
-let array2 = [3, 4, 6, 7, 9, 11];
 
-console.log('array1 is', array1);
-console.log('array2 is', array2);
-console.log('union is', getUnion(array1, array2));
-console.log('intersection is', getIntersection(array1, array2));
+let testFunction = (arr1, arr2) => {
+  console.log('Array 1 is', arr1);
+  console.log('Array 2 is', arr2);
+  console.log('Union is', getUnion(arr1, arr2));
+  console.log('Intersection is', getIntersection(arr1, arr2));
+}
+
+testFunction([1, 2, 5, 6, 8, 9, 10], [3, 4, 6, 7, 9, 11]);
+testFunction([1, 2, 5, 6, 10, 5], [3, 4, 6, 7, 9, 11]);
+testFunction([1, 2, 5, 6, 8, 9, 10], [18]);

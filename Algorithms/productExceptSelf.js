@@ -32,4 +32,9 @@ var productExceptSelf = function(nums) {
     return result;
 };
 
-console.log(productExceptSelf([1,2,3,4]));
+//==== TESTS ====
+let testFunction = (arr) => {
+  console.log(productExceptSelf(arr));
+};
+
+testFunction([1, 2, 3, 4]);

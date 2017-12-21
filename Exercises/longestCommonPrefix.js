@@ -20,13 +20,12 @@ let longestCommonPrefix = (array) => {
 };
 
 //==== TEST ====
-let array;
-array = ['socks', 'soccer', 'sorrow'];
-console.log(array);
-console.log('Longest Prefix:', longestCommonPrefix(array));
-array = ['socks', 'soccer', 'socrates'];
-console.log(array);
-console.log('Longest Prefix:', longestCommonPrefix(array));
-array = ['socks', 'soccer', 'ball'];
-console.log(array);
-console.log('Longest Prefix:', longestCommonPrefix(array));
+
+let testFunction = (array) => {
+  console.log('Array to be tested:', array);
+  console.log('Longest prefix:', longestCommonPrefix(array));
+};
+
+testFunction(['socks', 'soccer', 'sorrow']);
+testFunction(['socks', 'soccer', 'socrates']);
+testFunction(['socks', 'soccer', 'ball']);

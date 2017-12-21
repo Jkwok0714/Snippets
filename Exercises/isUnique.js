@@ -11,10 +11,11 @@ let isUnique = (string) => {
 };
 
 // ==== TESTS ====
-let testString;
-testString = 'ASDFGHJ';
-console.log(testString, 'is unique?', isUnique(testString));
-testString = 'Benji Whang';
-console.log(testString, 'is unique?', isUnique(testString));
-testString = 'Metal';
-console.log(testString, 'is unique?', isUnique(testString));
+
+let testFunction = (string) => {
+  console.log(string, 'is unique?', isUnique(string));
+}
+
+testFunction('ASDFGHJ');
+testFunction('Benji Whang');
+testFunction('Metal');

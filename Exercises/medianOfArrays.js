@@ -29,12 +29,9 @@ var findMedianSortedArrays = function(arr1, arr2) {
 
 // ==== TESTS ====
 
-let arr1, arr2;
-arr1 = [1, 4];
-arr2 = [0];
-//expect [0 1 4]
-console.log(findMedianSortedArrays(arr1, arr2));
-arr1 = [2, 5, 12, 24];
-arr2 = [1, 6, 9, 17];
-//Expect [1 2 5 6 HERE 9 12 17 24]
-console.log(findMedianSortedArrays(arr1, arr2));
+let testFunction = (arr1, arr2) => {
+  console.log(findMedianSortedArrays(arr1, arr2));
+};
+
+testFunction([1, 4], [0]);
+testFunction([2, 5, 12, 24], [1, 6, 9, 17]);

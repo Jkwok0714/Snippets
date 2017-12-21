@@ -27,13 +27,11 @@ let plusOne = (arr) => {
 };
 
 //==== TEST ====
-let arr;
-arr = [1, 2, 6, 5];
-console.log('Arr:', arr);
-console.log('Add:', plusOne(arr));
-arr = [1, 2, 6, 9];
-console.log('Arr:', arr);
-console.log('Add:', plusOne(arr));
-arr = [9, 9, 9, 9];
-console.log('Arr:', arr);
-console.log('Add:', plusOne(arr));
+let testFunction = (arr) => {
+  console.log('Array:', arr);
+  console.log('Added:', plusOne(arr));
+};
+
+testFunction([1, 2, 6, 5]);
+testFunction([1, 2, 6, 9]);
+testFunction([9, 9, 9, 9]);

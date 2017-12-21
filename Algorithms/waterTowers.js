@@ -27,12 +27,10 @@ let findWater = (towers) => {
 
 // ==== TEST ====
 
-let towers;
-towers = [2, 0 ,2];
-console.log('Water in', towers, ' : ', findWater(towers));
+let testFunction = (towers) => {
+  console.log('Water in', towers, ' : ', findWater(towers));
+};
 
-towers = [0, 5 ,2];
-console.log('Water in', towers, ' : ', findWater(towers));
-
-towers = [3, 2, 5, 4, 2, 3];
-console.log('Water in', towers, ' : ', findWater(towers));
+testFunction([2, 0, 2]);
+testFunction([0, 5, 2]);
+testFunction([3, 2, 5, 4, 2, 3]);
