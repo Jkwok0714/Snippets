@@ -1,0 +1,270 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Audio Meter Test</title>
+    <meta name="description" content="The HTML5 Herald">
+    <meta name="author" content="SitePoint">
+
+    <script>
+        const VOLUME_MODIFIER = 300;
+
+
+        //Volume meter code : https://github.com/cwilso/volume-meter
+        let createAudioMeter = function (audioContext, clipLevel, averaging, clipLag) {
+            let processor = audioContext.createScriptProcessor(512);
+            processor.onaudioprocess = volumeAudioProcess;
+            processor.clipping = false;
+            processor.lastClip = 0;
+            processor.volume = 0;
+            processor.clipLevel = clipLevel || 0.98;
+            processor.averaging = averaging || 0.96;
+            processor.clipLag = clipLag || 750;
+
+            processor.connect(audioContext.destination);
+
+            processor.checkClipping = () => {
+                if (!this.clipping)
+                    return false;
+                if ((this.lastClip + this.clipLag) < window.performance.now())
+                    this.clipping = false;
+                return this.clipping;
+            };
+
+            processor.shutdown = () => {
+                this.disconnect();
+                this.onaudioprocess = null;
+            };
+
+            return processor;
+        }
+
+        let volumeAudioProcess = function (event) {
+            let buf = event.inputBuffer.getChannelData(0);
+            let bufLength = buf.length;
+            let sum = 0;
+            let x;
+
+            for (let i = 0; i < bufLength; i++) {
+                x = buf[i];
+                if (Math.abs(x) >= this.clipLevel) {
+                    this.clipping = true;
+                    this.lastClip = window.performance.now();
+                }
+                sum += x * x;
+            }
+
+            let rms = Math.sqrt(sum / bufLength);
+
+            this.volume = Math.max(rms, this.volume * this.averaging);
+        }
+
+        let audioContext = null;
+        let meter = null;
+        let WIDTH = 500;
+        let HEIGHT = 50;
+        let rafID = null;
+
+        let textBox = null;
+        let iconBox = null;
+        let thresholdInput = null;
+        let delayInput = null;
+
+        let buttonElement = null;
+
+        //Declare elements that need updating
+
+        window.onload = () => {
+            textBox = document.querySelector('.volume-field');
+            iconBox = document.querySelector('.sound-icon');
+
+            thresholdInput = document.querySelector('.threshold-input');
+            delayInput = document.querySelector('.delay-input');
+
+            buttonElement = document.querySelector('.submit-btn');
+
+            buttonElement.onmousedown = handleButtonClick;
+
+            window.AudioContext = window.AudioContext || window.webkitAudioContext;
+            audioContext = new AudioContext();
+
+            try {
+                navigator.getUserMedia =
+                    navigator.getUserMedia ||
+                    navigator.webkitGetUserMedia ||
+                    navigator.mozGetUserMedia;
+
+                navigator.getUserMedia({
+                    "audio": {
+                        "mandatory": {
+                            "googEchoCancellation": "false",
+                            "googAutoGainControl": "false",
+                            "googNoiseSuppression": "false",
+                            "googHighpassFilter": "false"
+                        },
+                        "optional": []
+                    },
+                }, gotStream, didntGetStream);
+            } catch (e) {
+                alert('getUserMedia threw exception :' + e);
+            }
+
+        }
+
+
+        let didntGetStream = () => {
+            alert('Stream generation failed.');
+        }
+
+        let mediaStreamSource = null;
+
+        let gotStream = (stream) => {
+            // Create an AudioNode from the stream.
+            mediaStreamSource = audioContext.createMediaStreamSource(stream);
+
+            // Create a new volume meter and connect it.
+            meter = createAudioMeter(audioContext);
+            mediaStreamSource.connect(meter);
+
+            let interval = setInterval(() => {
+                handleVolumeChanges(meter.volume);
+            }, 500);
+        }
+
+        //Throttling/delay function
+
+        let UPDATE_INTERVAL = 500;
+        let VOLUME_THRESHOLD = 5;
+
+        let timer = null;
+        let isTalking = false;
+        let lastCall = false;
+
+        let handleVolumeChanges = (rawVolume) => {
+            let adjustedVolume = Math.round(rawVolume * VOLUME_MODIFIER);
+            textBox.textContent = adjustedVolume;
+            if (adjustedVolume > VOLUME_THRESHOLD && !isTalking) {
+                setTalking(true);
+            } else if (adjustedVolume <= VOLUME_THRESHOLD && (isTalking || lastCall)) {
+                setTalking(false);
+            }
+        }
+
+        let setTalking = (status) => {
+            if (!!timer) {
+                timer = null;
+            } else {
+                timer = setTimeout(() => {
+                    lastCall = status;
+                    updateStatus(status);
+                    timer = null;
+                }, UPDATE_INTERVAL);
+            }
+            isTalking = status;
+        }
+
+        let updateStatus = (status) => {
+            // console.log('Updated status', status);
+            if (status) {
+                iconBox.setAttribute('style', 'opacity: 1');
+            } else {
+                iconBox.setAttribute('style', 'opacity: 0.2');
+            }
+        }
+
+        let handleButtonClick = () => {
+            UPDATE_INTERVAL = delayInput.value;
+            VOLUME_THRESHOLD = thresholdInput.value;
+            console.log('Set new settings', VOLUME_THRESHOLD, UPDATE_INTERVAL);
+        };
+    </script>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            user-select: none;
+        }
+
+        h1 {
+            color: white;
+        }
+
+        .header-area {
+            width: 100%;
+            height: 5em;
+            background-color: #54bc9c;
+
+            text-align: center;
+            padding-top: 2em;
+        }
+
+        .content-area {
+            padding-top: 2em;
+            display: inline-block;
+            width: 100%;
+            height: 10vh;
+            border-bottom: 1px solid gray;
+
+            text-align: center;
+        }
+
+        input {
+            text-align: center;
+        }
+
+        .content-block {
+            display: inline-block;
+            width: 20%;
+        }
+
+        .sound-icon {
+            font-size: 30px;
+        }
+
+        .submit-btn {
+            display: inline-block;
+            margin: 20px auto;
+            margin-left: 10px;
+            background: #ef6330;
+            border-radius: 2px;
+            height: 40px;
+            line-height: 40px;
+            box-shadow: 0 0 2px rgba(0,0,0,.12), 0 2px 2px rgba(0,0,0,.2);
+            color: #fff;
+            cursor: pointer;
+            border: none;
+            letter-spacing: .5px;
+            font-size: 14px;
+            padding: 0 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header-area">
+        <h1>Audio Metering Test</h1>
+    </header>
+
+    <div class="content-area">
+        <div class="content-block volume-field">0.00</div>
+        <div class="content-block sound-icon">📢</div>
+    </div>
+
+    <div class="content-area">
+        <div class="content-block">
+            <div>Volume Threshold</div>
+            <input class="threshold-input" type="number" value="5"/>
+        </div>
+        <div class="content-block">
+            <div>Interval</div>
+            <input class="delay-input" type="number" value="500" />
+        </div>
+        <button class="submit-btn">Apply</button>
+    </div>
+
+</body>
+
+</html>
