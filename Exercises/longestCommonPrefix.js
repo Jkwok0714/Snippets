@@ -1,3 +1,5 @@
+//Between n words find longest common prefix
+
 let longestCommonPrefix = (array) => {
   let count = 0;
   let prefix = '';

@@ -1,3 +1,5 @@
+//Find duplicate characters
+
 let isUnique = (string) => {
   let tracker = {};
   for (var i = 0; i < string.length; i++) {
@@ -13,7 +15,7 @@ let isUnique = (string) => {
 // ==== TESTS ====
 
 let testFunction = (string) => {
-  console.log(string, 'is unique?', isUnique(string));
+  console.log(string, '- is unique?', isUnique(string));
 }
 
 testFunction('ASDFGHJ');
