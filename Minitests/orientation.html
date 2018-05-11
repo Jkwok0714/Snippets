@@ -1,0 +1,46 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Device Orientation</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+  <style>
+    .container {
+      width: 50vw;
+      margin: auto;
+
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .container span {
+      text-align: center;
+      font-size: 3vmax;
+    }
+
+  </style>
+
+</head>
+
+<body>
+  <div class="container">
+    <span class="orientation"></span>
+    <span class="dimensions"></span>
+  </div>
+  <script>
+  window.onload = () => {
+    const orientationBox = document.querySelector('.orientation');
+    const dimensionsBox = document.querySelector('.dimensions');
+
+    window.onresize = () => {
+      orientationBox.innerHTML = window.orientation;
+      dimensionsBox.innerHTML = `w: ${window.innerWidth}, h: ${window.innerHeight}`;
+    };
+  };
+  </script>
+</body>
+</html>
