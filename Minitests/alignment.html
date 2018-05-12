@@ -1,0 +1,74 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Device Orientation</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+  <style>
+  .container {
+display: -webkit-flex; /* Safari */
+display: flex;
+}
+
+.container, input {
+  text-align: center;
+}
+
+.container:after {
+  content:"";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  border-left: 2px dotted #ff0000;
+}
+
+.left {
+display: inline-block;
+flex: 1;
+
+}
+
+.left input {
+float: right;
+}
+
+.right {
+display: inline-block;
+flex: 1;
+}
+
+.right input {
+float: left;
+}
+
+.center {
+display: inline-block;
+}
+  </style>
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="left">
+        <input type="button" value="48">
+        <input type="button" value="49">
+    </div>
+    <div class="center">
+        <input type="text" size="5" maxlength="5" value="50">
+    </div>
+    <div class="right">
+        <input type="button" value="51">
+        <input type="button" value="52">
+        <input type="button" value="53">
+    </div>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+$flow-green: #19bc9c;
+
+.appcue-box {
+    background-color: $flow-green;
+    position: fixed;
+    // top: 10%;
+    // left: 10%;
+
+    transform: translateY(-50%);
+
+    z-index: 9000;
+
+    padding: 1em;
+    max-width: 300px;
+
+    &.appcue-hidden {
+        display: none;
+    }
+    .appcue-content {
+        color: white;
+        font-size: 14px;
+
+        white-space: pre-wrap;
+    }
+}
+
+.appcue-box[pointer-position="right"] {
+    transform: translateX(-108%);
+}
+
+.appcue-box[pointer-position="left"]:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-right-color: $flow-green;
+	border-left: 0;
+	border-bottom: 0;
+	margin-top: -10px;
+	margin-left: -20px;
+}
+
+.appcue-box[pointer-position="right"]:after {
+	content: '';
+	position: absolute;
+	right: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-left-color: #00aabb;
+	border-right: 0;
+	border-bottom: 0;
+	margin-top: -10px;
+	margin-right: -20px;
+}
+
+.highlight {
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .4);
+  position: fixed;
+  z-index: 8999;
+  pointer-events:  none;
+  transition: visibility 0.5s ease;
+
+  -webkit-animation: fadein 0.5s; // Safari, Chrome and Opera > 12.1 /
+       -moz-animation: fadein 0.5s; // Firefox < 16 /
+        -ms-animation: fadein 0.5s; // Internet Explorer /
+         -o-animation: fadein 0.5s; // Opera < 12.1 /
+            animation: fadein 0.5s;
+
+  filter: blur(5px);
+
+  &.hidden {
+      display: none;
+  }
+}
