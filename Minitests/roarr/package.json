@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "start": "ROARR_LOG=true node roar.js | roarr pretty-print >> prettyLogTest.log",
+    "forever": "ROARR_LOG=true forever start -l logTestL.log -o logTest.log -e errorTest.log -a roar.js",
+    "forevernoroarr": "forever start -l logTestL.log -o logTest.log -e errorTest.log -a roar.js"
+  }
+}
