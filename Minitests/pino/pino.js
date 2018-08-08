@@ -24,6 +24,14 @@ const child = childProcess.spawn(process.execPath, [
   'fatal', `${logPath}/pino-fatal.log`
 ], {cwd, env});
 
+const exitChild = () => {
+  // log.info('Exiting child process');
+  console.log('Exit child process');
+  process.exit();
+};
+child.on('SIGINT', exitChild);
+child.on('SIGTERM', exitChild);
+
 logThrough.pipe(child.stdin);
 
 // Log pretty messages to console (optional, for development purposes only)
@@ -31,10 +39,16 @@ const pretty = pino.pretty();
 pretty.pipe(process.stdout);
 logThrough.pipe(pretty);
 
+// process unhandled exceptions
+process.on('uncaughtException', (e) => {
+  log.fatal('Uncaught exception', e.stack || e);
+  process.exit(1);
+});
+
 
 //
 log.info('hello world');
-log.error('this is at error level');
+// log.error('this is at error level');
 // pino.info('the answer is %d', 42)
 // pino.info({ obj: 42 }, 'hello world')
 // pino.info({ obj: 42, b: 2 }, 'hello world')
@@ -42,7 +56,7 @@ log.error('this is at error level');
 // setImmediate(function () {
 //   pino.info('after setImmediate')
 // })
-log.error(new Error('an error'))
+// log.error(new Error('an error'))
 //
 // var child = pino.child({ a: 'property' })
 // child.info('hello child!')
