@@ -1,4 +1,5 @@
 # Hashtag python comment!
+import random
 
 # Supernoob stuff
 print 'Hello i am the peethon'
@@ -15,7 +16,7 @@ print superVariable + var3
 
 # Tuples vs Lists. Tuples are constants
 nyantuple = ('hanekawa', 'kagarino')
-wanlist = ['ellie', 'charlie', 'happy']
+wanlist = ['ellie', 'charlie', 'dogethatstealsbunfromsatania']
 
 wanlist[2] = 'sad'
 print 'wanlist[2]:', wanlist
@@ -30,6 +31,17 @@ print 'Greatest number', greatestNumber
 greatestNumber **= 2
 print 'Greatest number after operator', greatestNumber
 if (greatestNumber == 16): print 'Wow it is actually 16. cool'
+print 'Abs of -4', abs(-4)
+
+# Choice
+print 'Selecting stuff from wanlist'
+print '==', random.choice(wanlist)
+print '==', random.choice(wanlist)
+
+waffus = ['aqua', 'megumin', 'kurisu', 'hanekawa', 'asuna', 'tomoko',
+    'kagarino', 'shinoboom']
+for x in range(3):
+    print '==', random.choice(waffus)
 
 # goodbye
 raw_input('\n\nPress enter to make this go away.')
