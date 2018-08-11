@@ -7,6 +7,9 @@ def showInstructions():
   print('''
 RPG Game
 ========
+
+Escape to the garden with a key and explosives
+
 Commands:
   go [cardinal direction]
   get [item]
@@ -28,15 +31,32 @@ inventory = []
 
 # a dictionary linking a room to other rooms
 rooms = {
-
             'Hall' : {
-                  'south' : 'Kitchen'
+                  'south' : 'Kitchen',
+                  'west' : 'Girlie Room',
+                  'north' : 'Beer Hall',
+                  'item' : 'key'
                 },
-
+            'Girlie Room' : {
+                  'east' : 'Hall',
+                  'north' : 'Garden',
+                  'item' : 'nyanners'
+                },
+            'Beer Hall' : {
+                  'south' : 'Hall',
+                  'item' : 'explosives'
+                },
             'Kitchen' : {
-                  'north' : 'Hall'
+                  'north' : 'Hall',
+                  'west' : 'Dining Room',
+                  'item' : 'monster'
+                },
+            'Dining Room' : {
+                  'east' : 'Kitchen'
+                },
+            'Garden' : {
+                  'south' : 'Girlie Room'
                 }
-
          }
 
 # start the player in the Hall
@@ -46,7 +66,6 @@ showInstructions()
 
 # loop forever
 while True:
-
   showStatus()
 
   #get the player's next 'move'
@@ -65,6 +84,12 @@ while True:
     if move[1] in rooms[currentRoom]:
       #set the current room to the new room
       currentRoom = rooms[currentRoom][move[1]]
+      if 'item' in rooms[currentRoom] and 'Monster' in rooms[currentRoom]['item']:
+          print('Oh no, a dogemonster. You lose the will to go on.')
+          break
+      if currentRoom == 'Garden' and 'key' in inventory and 'explosives' in inventory:
+          print('You escaped into the garden!')
+          break
     #there is no door (link) to the new room
     else:
         print('You can\'t go that way!')
@@ -83,6 +108,8 @@ while True:
     else:
       #tell them they can't get it
       print('Can\'t get ' + move[1] + '!')
+
+  # Fabulous new functionality to exit the game
   if move[0] == 'exit' :
       print('Exiting "game" bhi')
       raise SystemExit
