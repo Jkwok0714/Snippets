@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+  "name": "Communication Breakdown",
+  "description": "Testing if communication breaks down",
+  "version": "0.1",
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": ["main.js"]
+    }
+  ],
+  "browser_action": {},
+  "background": {
+    "scripts": [
+      "background.js",
+      "socketio.js"
+    ],
+    "persistent": false
+  },
+  "permissions": ["http://localhost/*"]
+}
