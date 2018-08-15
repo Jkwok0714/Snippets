@@ -25,16 +25,8 @@ const tripsReducer = (state = initialState, action) => {
   case ADD_TRIP:
     return Object.assign({}, state,
       {items: [...state.items, {id: Math.floor(Math.random() * 1000), destination: action.trip.destination}]});
-    // return {
-    //   state: state,
-    //   items: [...state.items, {id: Math.random(), destination: action.trip.destination}]
-    // };
   case CHANGE_OWNER:
     return Object.assign({}, state, {owner: action.owner});
-    // return {
-    //   state: state,
-    //   owner: action.owner
-    // };
   default:
     return state;
   }
@@ -54,7 +46,6 @@ let trips = [
   {destination: 'Bergen'}];
 
 console.log('===\nAdding some items to the store\n===');
-// let trips = ['Poveglia', 'Bodie', 'Chernobyl', 'Tombstone'];
 
 trips.map((trip) => {
   store.dispatch(addTrip(trip));

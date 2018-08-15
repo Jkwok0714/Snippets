@@ -17,47 +17,63 @@ Commands:
 
 def showStatus():
   #print the player's current status
-  print('---------------------------')
+  print('\n---------------------------')
   print('You are in the ' + currentRoom)
   #print the current inventory
   print('Inventory : ' + str(inventory))
   #print an item if there is one
-  if "item" in rooms[currentRoom]:
-    print('You see a ' + rooms[currentRoom]['item'])
+  # if "item" in rooms[currentRoom]:
+  #   print('You see a ' + rooms[currentRoom]['item'])
+  showItemsInRoom()
+  showAvailableDirections()
   print("---------------------------")
+
+def showAvailableDirections():
+  string = 'You see doors going these directions:'
+  for key, value in rooms[currentRoom].items():
+      if key == 'north' or key == 'south' or key == 'west' or key == 'east':
+          string += ' ' + key
+  print(string)
+
+def showItemsInRoom():
+  if 'item' in rooms[currentRoom]:
+      string = 'You see these items:'
+      for key in rooms[currentRoom]['item']:
+          string += ' ' + key
+      print(string)
 
 # an inventory, which is initially empty
 inventory = []
 
 # a dictionary linking a room to other rooms
 rooms = {
-            'Hall' : {
-                  'south' : 'Kitchen',
-                  'west' : 'Girlie Room',
-                  'north' : 'Beer Hall',
-                  'item' : 'key'
-                },
-            'Girlie Room' : {
-                  'east' : 'Hall',
-                  'north' : 'Garden',
-                  'item' : 'nyanners'
-                },
-            'Beer Hall' : {
-                  'south' : 'Hall',
-                  'item' : 'explosives'
-                },
-            'Kitchen' : {
-                  'north' : 'Hall',
-                  'west' : 'Dining Room',
-                  'item' : 'monster'
-                },
-            'Dining Room' : {
-                  'east' : 'Kitchen'
-                },
-            'Garden' : {
-                  'south' : 'Girlie Room'
-                }
-         }
+        'Hall' : {
+              'south' : 'Kitchen',
+              'west' : 'Girlie Room',
+              'north' : 'Beer Hall',
+              'item' : ['key']
+            },
+        'Girlie Room' : {
+              'east' : 'Hall',
+              'north' : 'Garden',
+              'item' : ['nyanners', 'rpop', 'meme']
+            },
+        'Beer Hall' : {
+              'south' : 'Hall',
+              'item' : ['explosives', 'budweiser', 'corona liggit']
+            },
+        'Kitchen' : {
+              'north' : 'Hall',
+              'west' : 'Dining Room',
+              'item' : ['monster']
+            },
+        'Dining Room' : {
+              'east' : 'Kitchen'
+            },
+        'Garden' : {
+              'south' : 'Girlie Room'
+            }
+     }
 
 # start the player in the Hall
 currentRoom = 'Hall'
@@ -103,7 +119,9 @@ while True:
       #display a helpful message
       print(move[1] + ' got!')
       #delete the item from the room
-      del rooms[currentRoom]['item']
+      rooms[currentRoom]['item'].remove(move[1])
+      if not rooms[currentRoom]['item']:
+        del rooms[currentRoom]['item']
     #otherwise, if the item isn't there to get
     else:
       #tell them they can't get it
@@ -111,5 +129,5 @@ while True:
 
   # Fabulous new functionality to exit the game
   if move[0] == 'exit' :
-      print('Exiting "game" bhi')
+      print('You have spontaneously combusted. Now exiting "game" bhi')
       raise SystemExit
