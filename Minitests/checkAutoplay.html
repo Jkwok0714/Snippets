@@ -1,0 +1,37 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+  <style>
+    video {
+      height: 100vh;
+      width: 100vw;
+    }
+  </style>
+
+</head>
+
+<body>
+  <video src="https://d1aiefvtf97wet.cloudfront.net/resources/webinato/records/PMZwNyAWvv.mp4" controls />
+  <script>
+    window.onload = () => {
+      var promise = document.querySelector('video').play();
+
+      console.log('Checking autoplay');
+      if (promise !== undefined) {
+        promise.then(() => {
+          window.alert('Autoplay started');
+        }).catch(err => {
+          window.alert('Autplay prevented');
+        })
+      }
+    };
+  </script>
+</body>
+</html>

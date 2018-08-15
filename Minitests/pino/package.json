@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "start": "node pino.js",
+    "forever": "forever start -l logTestL.log -o forever-log.log -e forever-error.log -a pino.js"
+  }
+}

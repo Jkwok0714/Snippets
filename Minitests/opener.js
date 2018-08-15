@@ -20,4 +20,9 @@ app.get('/open', (req, res) => {
   res.send('OPENEDED');
 });
 
+app.post('/post', (req, res) => {
+  console.log('Request', req.query);
+  res.send('POST');
+});
+
 app.listen(PORT_NUMBER, () => console.log(`The Opener listening on port ${PORT_NUMBER}!`));
