@@ -1,6 +1,5 @@
 const express = require('express');
 const htmlDir = __dirname;
-const app = express();
 const { promisify } = require('util');
 const fs = require('fs');
 const path = require('path');
@@ -9,6 +8,7 @@ const TEMPLATES = require('./templates');
 
 const readFile = promisify(fs.readFile);
 
+const app = express();
 const port = process.env.PORT || 3001;
 const encoding = 'utf8';
 const defaultTemplate = 'SIGNUP';
@@ -33,7 +33,7 @@ const loadHTML = () => {
       rej(err);
     })
   });
-}
+};
 
 const applyStrings = (baseTemplate, useTemplate) => {
   let result = baseTemplate;
@@ -43,35 +43,30 @@ const applyStrings = (baseTemplate, useTemplate) => {
     result = result.replace(target, useTemplate[key]);
   })
   return result;
-}
+};
 
 const applyTemplate = (baseTemplate, name = 'SIGNUP') => {
   return new Promise ((resolve, reject) => {
     const useTemplate = TEMPLATES[name] ? TEMPLATES[name] : TEMPLATES[defaultTemplate];
-
     const applyOptionalBlock = (baseTemplate, str) => baseTemplate.replace('*|optionalBlock|*', str);;
 
-    console.log('useTemplate', useTemplate);
     // Do optional block first
     if (useTemplate.optionalBlock) {
       // Read block file
-      console.log('There is an optional block');
       readFile(path.join(__dirname, `${useTemplate.optionalBlock}.html`), encoding).then(str => {
         baseTemplate = applyOptionalBlock(baseTemplate, str);
         resolve(applyStrings(baseTemplate, useTemplate));
       }).catch(err => {
-        console.log('Optional block template does not exist!');
         baseTemplate = applyOptionalBlock(baseTemplate, '');
         delete useTemplate.optionalBlock;
         resolve(applyStrings(baseTemplate, useTemplate));
       });
     } else {
-      console.log('There is no optional block');
       baseTemplate = applyOptionalBlock(baseTemplate, '');
       resolve(applyStrings(baseTemplate, useTemplate));
     }
   });
-}
+};
 
 const getPage = (res, template = null) => {
   loadHTML().then(htmlString => {
@@ -81,24 +76,22 @@ const getPage = (res, template = null) => {
   }).catch(err => {
     console.error(err);
   })
-}
+};
 
 app.get('/test', (req, res) => {
-    // response.sendfile(htmlDir + 'template.html');
     res.send(testHtmlString);
 });
 
 app.get('/', (req, res) => {
-    // response.sendfile(htmlDir + 'template.html');
     getPage(res);
 });
 
-app.get('/welcome', (req, res) => {
-    // response.sendfile(htmlDir + 'template.html');
-    getPage(res, 'WELCOME');
-    // res.send(htmlString);
+app.get('/template/:templateName', (req, res) => {
+    // console.log('template var', req.params);
+    const { templateName } = req.params;
+    getPage(res, templateName.toUpperCase());
 });
 
-app.listen(port, function() {
+app.listen(port, () => {
   console.log(`Lame static server listening on :${port}`);
 });
