@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
 
+const promiseLoop = require('./utility').promiseLoop;
+
 const readdir = promisify(fs.readdir);
 const readFile = promisify(fs.readFile);
 
@@ -9,16 +11,7 @@ const searchPath = 'jasonsJsons/'
 const loadType = 'json';
 const encoding = 'utf8';
 
-const promiseLoop = (array, task) => {
-  let pLoop = array.map(item => {
-    return new Promise((res, rej) => {
-      task(item, (data) => {
-        res(data);
-      });
-    });
-  });
-  return Promise.all(pLoop);
-};
+console.log(promiseLoop);
 
 const getPathList = (searchPath, loadType) => {
   return new Promise((resolve, reject) => {
@@ -55,5 +48,5 @@ getPathList(searchPath, loadType).then(fileList => {
 }).then(res => {
   console.log('After reading res:\n', res)
   const aggregated = combineJSON(res);
-  console.log('Aggregated:\n', aggregated);
+  console.log('Aggregated:\n', JSON.stringify(aggregated, null, 2));
 });
