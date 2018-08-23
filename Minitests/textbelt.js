@@ -1,6 +1,8 @@
 var text = require('textbelt');
 
-text.send('4158231330', 'txt balt sez harroo~!', undefined, function(err) {
+const textelt = process.argv[2];
+
+text.send(textelt, 'txt balt sez harroo~!', undefined, function(err) {
   if (err) {
     console.log(err);
   }
