@@ -1,0 +1,45 @@
+{
+  "manifest_version": 2,
+  "name": "Capturing the CPU Explosion",
+  "description": "Testing if the CPU will explode",
+  "version": "0.1",
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": ["main.js"]
+    }
+  ],
+  "browser_action": {},
+  "background": {
+    "scripts": [
+      "tabCapturer.js",
+      "background.js",
+      "socketio.js"
+    ],
+    "persistent": false
+  },
+  "permissions": [
+    "http://localhost/*",
+    "https://*.flowapp.com/*",
+    "activeTab",
+    "tabCapture",
+    "<all_urls>"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "http://localhost/*",
+      "https://*.flowapp.com/*"
+    ]
+  },
+  "commands": {
+    "toggle-feature-foo": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "Toggle feature foo"
+    }
+  }
+}

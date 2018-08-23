@@ -1,0 +1,135 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Screen Capture Test</title>
+    <meta name="description" content="The HTML5 Herald">
+    <meta name="author" content="SitePoint">
+
+    <script>
+      // const extensionID = "beehmkkeidhacadepopmpfcodknfbnie";
+      const extensionID = 'pimnpnkelnhehkhhlkjfnecpjbgojpaj';
+
+      let buttonElement1, buttonElement2;
+
+      window.onload = () => {
+          buttonElement1 = document.querySelector('.submit-btn');
+          buttonElement2 = document.querySelector('.cancel-btn');
+
+          buttonElement1.onmousedown = handleButtonClick;
+          buttonElement2.onmousedown = handleStopClick;
+      }
+
+      const handleButtonClick = () => {
+        chrome.runtime.sendMessage(
+          extensionID,
+          {
+            actionName: "start",
+          },
+          function(response) {
+          }
+        );
+        window.alert('Call start');
+      }
+
+      const handleStopClick = () => {
+        chrome.runtime.sendMessage(
+          extensionID,
+          {
+            actionName: "stop",
+          },
+          function(response) {
+          }
+        );
+        window.alert('Call stop');
+      }
+    </script>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            user-select: none;
+        }
+
+        h1 {
+            color: white;
+        }
+
+        .header-area {
+            width: 100%;
+            height: 5em;
+            background-color: #66bcd2;
+
+            text-align: center;
+            padding-top: 2em;
+        }
+
+        .content-area {
+            padding-top: 2em;
+            display: inline-block;
+            width: 100%;
+            height: 10vh;
+            border-bottom: 1px solid gray;
+
+            text-align: center;
+        }
+
+        input {
+            text-align: center;
+        }
+
+        .content-block {
+            display: inline-block;
+            width: 20%;
+        }
+
+        .sound-icon {
+            font-size: 30px;
+        }
+
+        .submit-btn, .cancel-btn {
+            display: inline-block;
+            margin: 20px auto;
+            margin-left: 10px;
+            background: #ef6330;
+            border-radius: 2px;
+            height: 40px;
+            line-height: 40px;
+            box-shadow: 0 0 2px rgba(0,0,0,.12), 0 2px 2px rgba(0,0,0,.2);
+            color: #fff;
+            cursor: pointer;
+            border: none;
+            letter-spacing: .5px;
+            font-size: 14px;
+            padding: 0 30px;
+        }
+
+        video {
+          position: relative;
+          left: 50%;
+          transform: translateX(-50%);
+
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header-area">
+        <h1>Screen Capture Test</h1>
+    </header>
+
+    <video width="320" height="240" controls>
+      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+    </video>
+
+    <div class="content-area">
+        <button class="submit-btn">Start Capture</button>
+        <button class="cancel-btn">Stop Capture</button>
+    </div>
+
+</body>
+
+</html>
