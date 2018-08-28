@@ -9,6 +9,9 @@ const version = '0.0.1';
 const defaultMinFrameRate = 24;
 const defaultMaxFrameRate = 30;
 
+
+// TabCapturer class by Isaac Zhang
+
 class TabCapturer {
   constructor (a, b, options = {}) {
     this.mediaRecorder = null;
