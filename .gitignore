@@ -8,3 +8,5 @@ npm-debug.log
 *.log
 gitIgnoreThis/
 config.js
+config.py
+config.pyc

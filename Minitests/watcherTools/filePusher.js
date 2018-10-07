@@ -6,6 +6,8 @@ console.log(UTIL.makeToken(8));
 
 const testFilePath = 'gitIgnoreThis/boom.md';
 
+const NO_DIR_ERROR_CODE = 2;
+
 let sftp;
 
 //\x1b[32m
@@ -20,7 +22,7 @@ const runTest = () => {
     console.log('connected');
     return sftp.list('./');
   }).then((data) => {
-    console.log(data.map(file => file.name), 'the data info');
+    console.log('Files on remote:', data.map(file => file.name));
     console.log(`Now putting a file up there: ${testFilePath}`);
     return sftp.put(`${__dirname}/${testFilePath}`, testFilePath);
   }).then(() => {
@@ -40,7 +42,7 @@ const putWithMkdir = (localPath, remotePath) => {
     sftp.put(localPath, remotePath).then(() => {
       resolve();
     }).catch(err => {
-      if (err.code === 2) {
+      if (err.code === NO_DIR_ERROR_CODE) {
         // directory does not exist. make it
         const directoriesOnly = remotePath.split('/').slice(0, -1).join('/');
         console.log(`\x1b[33mErr code 2, attempt to create directories recursively: ${directoriesOnly}\x1b[0m`);
@@ -49,9 +51,7 @@ const putWithMkdir = (localPath, remotePath) => {
           putWithMkdir(localPath, remotePath).then(() => {
             resolve();
           });
-        }).catch(err => {
-          reject(err);
-        })
+        });
       } else {
         reject(err);
       }
