@@ -83,7 +83,6 @@ class ConnectionHandler:
                 self.sftp.chdir(basename)
                 return
 
-
 def main():
     print bcolors.BOLD, 'Initiating file moving script on', targetLocalPath, '...', bcolors.ENDC
     connection = ConnectionHandler(config)

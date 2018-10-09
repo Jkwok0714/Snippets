@@ -4,7 +4,7 @@ const UTIL = require('../utility');
 
 console.log(UTIL.makeToken(8));
 
-const testFilePath = 'gitIgnoreThis/boom.md';
+const testFilePath = 'gitIgnoreThis/';
 
 const NO_DIR_ERROR_CODE = 2;
 
@@ -35,7 +35,6 @@ const runTest = () => {
     console.log('\x1b[31mERROR:\x1b[0m', err);
   });
 }
-
 
 const putWithMkdir = (localPath, remotePath) => {
   return new Promise((resolve, reject) => {
