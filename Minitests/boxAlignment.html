@@ -1,0 +1,76 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Box Alignment</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+  <style>
+
+    h2 {
+      margin: auto;
+      font-family: sans-serif;
+      text-align: center;
+    }
+    .container {
+      width: 80vw;
+      height: 40vw;
+      margin: 1em auto;
+
+      background-color: #eff5ff;
+    }
+
+  </style>
+
+  <script>
+    window.onload = () => {
+    };
+
+    window.onkeydown = (e) => {
+      handleControl(e);
+    }
+
+    let boxes = 0;
+
+    let handleChangeBoxCount = (increment) => {
+      if (increment) {
+        createBox();
+      } else {
+        removeBox();
+      }
+    }
+
+    let removeBox = () => {
+      if (boxes <= 0) return;
+      boxes--;
+      document.querySelector(`#node${boxes}`).remove();
+    }
+
+    let createBox = () => {
+      let node = document.createElement('div');
+      node.className = 'inner-box';
+      node.id = `node${boxes}`;
+      document.querySelector('.container').appendChild(node);
+      boxes++;
+    }
+
+    let handleControl = (e) => {
+      const key = e.key;
+      if (key === 'ArrowLeft') {
+        handleChangeBoxCount(false);
+      } else if (key === 'ArrowRight') {
+        handleChangeBoxCount(true);
+      }
+    }
+  </script>
+
+</head>
+
+<body>
+  <h2>Use left/right keys to add or remove divs</h2>
+  <div class="container" />
+</body>
+</html>
