@@ -21,25 +21,55 @@
       margin: 1em auto;
 
       background-color: #eff5ff;
+
+      /* display: grid; */
+      /* grid-auto-flow: column; */
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .inner-box {
+      border: 1px solid gray;
+      margin: 1px;
+      flex-basis: calc(49% - 1px);
+    }
+
+    .full-width {
+      flex-basis: 100%;
     }
 
   </style>
 
   <script>
+    // document.getElementById("myH1").style.color = "red";
+    let boxes = 0;
+    let container;
     window.onload = () => {
+      container = document.querySelector('.container');
     };
 
     window.onkeydown = (e) => {
       handleControl(e);
     }
 
-    let boxes = 0;
-
     let handleChangeBoxCount = (increment) => {
       if (increment) {
         createBox();
       } else {
         removeBox();
+      }
+      handleStyleChanges(increment);
+    }
+
+    let handleStyleChanges = (increment) => {
+      if (boxes < 2 && !increment) {
+        // container.style.gridTemplateRows = '1fr';
+        Array.from(document.getElementsByClassName('inner-box')).forEach(el => el.classList.add('full-width'));
+      } else if (boxes === 2 && increment) {
+        Array.from(document.getElementsByClassName('inner-box')).forEach(el => el.classList.remove('full-width'));
+      } else {
+        // container.style.gridTemplateRows = '1fr 1fr';
       }
     }
 
@@ -52,8 +82,9 @@
     let createBox = () => {
       let node = document.createElement('div');
       node.className = 'inner-box';
+      if (boxes === 0) node.classList.add('full-width');
       node.id = `node${boxes}`;
-      document.querySelector('.container').appendChild(node);
+      container.appendChild(node);
       boxes++;
     }
 
