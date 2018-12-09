@@ -12,7 +12,7 @@ module.exports = {
     'Auto Lute of Acarime',
     'Valins Sword',
     'Linvi\'s Bow',
-    'Varias\'s Sky Blue Panties',
+    'Varias\'s Sky Blue Undies',
     'Cathedral World Map',
     'Random pair of stinky boots Valin wants',
     'Random dirty seat cushion Serenna wants',
@@ -44,5 +44,20 @@ module.exports = {
     { id: 4, name: 'Sola Calcifron', weapon: 'Sword', hometown: 'Eseroth' },
     { id: 5, name: 'Linvi Askelore', weapon: 'Bow', hometown: 'Belwood' },
     { id: 6, name: 'Seiviart Minestri', weapon: 'Staff', hometown: 'Alon' }
+  ],
+  locations: [
+    'Lugera',
+    'Alon',
+    'Karrier\'s Fort',
+    'Belwood',
+    'Ialesys',
+    'Arashield',
+    'Eseroth',
+    'Relinq',
+    'Acarime',
+    'Pripylen',
+    'Amina',
+    'Outer Circle',
+    'Ireae'
   ]
 }
