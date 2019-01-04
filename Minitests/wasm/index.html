@@ -1,0 +1,39 @@
+<html>
+<body>
+  <style>
+    body {
+      font-family: fantasy;
+      background-color: black;
+      color: white;
+      font-size: 16px;
+    }
+  </style>
+  <script>
+    const display = (str) => {
+      let child = document.createElement('div');
+      child.innerHTML = str;
+      document.body.appendChild(child);
+    };
+
+    fetch('generator.wasm').then(response => {
+      display('Got wasm data, loaded to buffer...');
+      return response.arrayBuffer()
+    }).then(bytes =>
+      WebAssembly.instantiate(bytes, {imports: {}})
+    ).then(results => {
+      window.lookup = results.instance.exports.lookup;
+      window.double = results.instance.exports.double;
+
+      console.log(results);
+
+      setTimeout(() => {
+        const ran = Math.floor(Math.random() * 6);
+        display(`Generated number ${ran}`);
+        display('Generated in wasm: ' + window.lookup(ran));
+        display(`Doubled ${ran} in wasm: ` + window.double(ran));
+      }, 1000);
+    });
+
+  </script>
+</body>
+</html>
