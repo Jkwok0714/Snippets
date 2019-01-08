@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.io Connector</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      let socket;
+
+      const appendDiv = (text) => {
+        let newDiv = document.createElement('div');
+        newDiv.innerHTML = text;
+        document.body.appendChild(newDiv);
+      }
+
+      const main = () => {
+        socket = io();
+        applyListeners(socket);
+        appendDiv('Initiated');
+        disconnectSocketAfterTime(socket, 5000);
+      }
+
+      const applyListeners = (socket) => {
+        socket.on('connect', () => {
+          appendDiv('Socket connected');
+        });
+
+        socket.on('disconnect', () => {
+          appendDiv('Socket disconnected');
+        });
+      };
+
+      const disconnectSocketAfterTime = (socket, time) => {
+        setTimeout(() => {
+          socket.disconnect();
+        }, time);
+      }
+
+      window.onload = () => {
+        main();
+      }
+    </script>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+  </body>
+</html>
