@@ -1,10 +1,17 @@
 // Config
-const NUM_SERVERS = 2;
+let customServerCount, customRunAmount;
+try {
+  customServerCount = parseInt(process.argv[2]);
+  customRunAmount = parseInt(process.argv[3]);
+} catch (e) {
+}
+
+const NUM_SERVERS = customServerCount || 6;
 const LARGE_LOAD = 5;
 const SMALL_LOAD = 1;
 const LOOP_TIME = 500;
 const CHANCE_FOR_SMALL_LOAD = .9;
-const TIMES_TO_RUN = 60;
+const TIMES_TO_RUN = customRunAmount || 60;
 const REMOVE_ENABLED = true;
 const TIMES_TO_DELETE = 10;
 
@@ -84,7 +91,7 @@ const removeLoadNTimes = (n, loopTime) => {
 }
 
 const runTest = () => {
-  console.log(`\x1b[36m *** Running the Round Shadfar *** \x1b[0m`);
+  console.log(`\x1b[36m *** Running the Round Shadfar: ${NUM_SERVERS} servers, +${TIMES_TO_RUN} users *** \x1b[0m`);
   setTimeout(() => {
     setupInitialServers(NUM_SERVERS);
     // Add a new heavy load to begin with
