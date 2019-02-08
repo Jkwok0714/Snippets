@@ -32,6 +32,10 @@ const simpleSearch = (arr, query, key) => {
     return arr.filter(o => new RegExp(query, 'i').test(o[key]));
 };
 
+const highbrowForLoop = (n, fnc) => {
+    Array.from({ length: n }, (_, i) => fnc(i));
+};
+
 /*
  * Test Methods
  */
@@ -75,6 +79,9 @@ const main = () => {
 
     announceTest('Simple search for Ashigaru');
     console.log(simpleSearch(units, 'ashi', 'name'));
+
+    announceTest('Highbrow for loop');
+    highbrowForLoop(5, (i) => console.log(`Intellectual #${i}`));
 };
 
 main();

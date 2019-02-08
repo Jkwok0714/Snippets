@@ -22,6 +22,16 @@ class Utility {
     if (len === null || typeof len !== 'number' || len < 1 || len > 20) len = 5;
     return Array(len + 1).join((Math.random().toString(36)+'00000000000000000').slice(2, 18)).slice(0, len);
   }
+
+  static chooseRandom (arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  static getRngBetween (a, b) {
+    const min = Math.min(a, b);
+    const max = Math.max(a, b);
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
 }
 
 module.exports = Utility;
