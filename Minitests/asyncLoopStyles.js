@@ -1,3 +1,7 @@
+/**
+ * Testing the call stack lengths of different possibly asynchronous looping methods
+ */
+
 Error.stackTraceLimit = Infinity;
 
 const methods = {};

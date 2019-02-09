@@ -1,3 +1,7 @@
+/**
+ * Scanning a directory for JSON and aggregating their data into one object
+ */
+
 const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');

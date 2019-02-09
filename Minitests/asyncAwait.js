@@ -1,3 +1,7 @@
+/**
+ * Using async-await in different ways and comparing against raw promises
+ */
+
 const junk = require('../junkData');
 const UTIL = require('./utility');
 

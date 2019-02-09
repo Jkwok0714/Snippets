@@ -1,3 +1,7 @@
+/**
+ * Playing around with using an object to store function calls instead of if/switch usage
+ */
+
 const LOCATIONS = {
   RELINQ: 'Relinq',
   ACARIME: 'Acarime',

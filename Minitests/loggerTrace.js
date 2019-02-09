@@ -1,3 +1,7 @@
+/** 
+ * Writing the stack trace when a function is called or error thrown
+ */
+
 let tracer = (msg) => {
 	let tracerError = new Error();
   let traceString = tracerError.stack.toString();

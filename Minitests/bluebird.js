@@ -8,6 +8,7 @@ var path = './trashOutput/testFile.txt';
 
 console.log('Entered file...\n');
 
+/** For testing Bluebird's promise library */
 function runTest() {
   console.log('\nRunning test...');
   helpers.promiseTest('http://www.google.com').then((msg) => {

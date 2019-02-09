@@ -1,3 +1,7 @@
+/**
+ * Test fs's watch method
+ */
+
 const { watch } = require('fs');
 const watchDirectory = require('path').resolve(__dirname, '../');
 

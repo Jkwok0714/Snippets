@@ -1,3 +1,7 @@
+/**
+ * For testing the length of call stacks when using a callback loop
+ */
+
 Error.stackTraceLimit = Infinity;
 
 const NUM_USERS = parseInt(process.argv[2]) || 5;

@@ -1,5 +1,10 @@
+/**
+ * For testing the length of call stacks when using a callback loop
+ */
+
 Error.stackTraceLimit = Infinity;
 const RECURSE_AMOUNT = 5;
+
 
 const getUserObject = (callback) => {
 	getUserInfo(() => {
