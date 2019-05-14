@@ -26,6 +26,10 @@ class Utility {
   static chooseRandom (arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   }
+
+  static enforceDecimals (input, decimalPlaces = 2, keepZeroes = false) {
+    return keepZeroes ? input.toFixed(decimalPlaces) : toFloat(input.toFixed(decimalPlaces));
+  }
 }
 
 module.exports = Utility;
