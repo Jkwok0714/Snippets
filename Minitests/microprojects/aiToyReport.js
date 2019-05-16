@@ -41,7 +41,12 @@ const KEYS = {
     HEALED: 'healed',
     TOTAL_HEALED: 'totalHealed',
     ATTACKS: 'attacks',
-    TOTAL_ATTACKS: 'totalAttacks'
+    TOTAL_ATTACKS: 'totalAttacks',
+    TWENTY_KILL_RUNS: 'twentyKillRuns',
+    HUNDRED_KILL_RUNS: 'hundredKillRuns',
+    TEN_KILL_RUNS: 'tenKillRuns',
+    TOTAL_TWENTY_KILL_RUNS: 'totalTwentyKillRuns',
+    TOTAL_HUNDRED_KILL_RUNS: 'totalHundredKillRuns'
 };
 const ACTIONS = {
     REPORT_KILL: 'reportKill',
@@ -83,6 +88,18 @@ const logError = (err) => {
     console.log(`\x1b[31m[ERROR] ${isString ? err : err.message}\x1b[0m`);
 };
 
+const checkKillMilestones = (name, count) => {
+    if (count === 20) {
+        addStat(name, KEYS.TWENTY_KILL_RUNS, 1);
+        AnalyticsHandler.genericUpdate(KEYS.TOTAL_TWENTY_KILL_RUNS, 1);
+    } else if (count === 100) {
+        addStat(name, KEYS.HUNDRED_KILL_RUNS, 1);
+        AnalyticsHandler.genericUpdate(KEYS.TOTAL_HUNDRED_KILL_RUNS, 1);
+    } else if (count === 10) {
+        addStat(name, KEYS.TEN_KILL_RUNS, 1);
+    }
+}
+
 const handleReportRequest = (action, dataTag, data1, data2) => {
     return new Promise((res) => {
         if (dataTag === 'undefined') return res();
@@ -102,13 +119,18 @@ const handleReportRequest = (action, dataTag, data1, data2) => {
                 addStat(dataTag, KEYS.DEATHS, 1);
                 addStat(dataTag, KEYS.DAMAGE_DEALTH, data2);
                 AnalyticsHandler.updateAverageKills(data1);
-                console.log(`\x1b[36m[handlePerformRequest] Death reported (${dataTag} : ${data2})\x1b[32m`);
+
+                const currAvg = dataCache[dataTag][KEYS.AVG_KILLS];
+                const currSpawns = dataCache[dataTag][KEYS.SPAWNS];
+                setStat(dataTag, KEYS.AVG_KILLS, computeRollingAverage(currAvg, currSpawns, data1));
+                console.log(`\x1b[36m[handlePerformRequest] Death reported (${dataTag} : ${data1} : ${data2})\x1b[32m`);
                 break;
             case ACTIONS.REPORT_KILL:
-                // console.log(`\x1b[36m[handlePerformRequest] Kill reported ${dataTag} ${data2}\x1b[32m`);
                 addStat(dataTag, KEYS.KILLS, 1);
                 addStat(dataTag, KEYS.DAMAGE_DEALTH, data2);
                 AnalyticsHandler.updateTotalDamage(data2);
+
+                checkKillMilestones(dataTag, +data1);
                 break;
             case ACTIONS.REPORT_ATTACKS:
                 addStat(dataTag, KEYS.ATTACKS, data2);
@@ -172,7 +194,11 @@ const initRow = (name) => {
         [KEYS.KILLS]: 0,
         [KEYS.SPAWNS]: 0,
         [KEYS.TRAP_DEATHS]: 0,
-        [KEYS.HEALED]: 0
+        [KEYS.HEALED]: 0,
+        [KEYS.TEN_KILL_RUNS]: 0,
+        [KEYS.TWENTY_KILL_RUNS]: 0,
+        [KEYS.HUNDRED_KILL_RUNS]: 0,
+        [KEYS.AVG_KILLS]: 0
     };
 };
 
@@ -191,6 +217,18 @@ const setStat = (target, statName, amount, parse = true) => {
     touched = true;
 }
 
+const computeRollingAverage = (oldAvg, count, newData)  => {
+    if (!count || count === 0) return newData;
+
+
+    let curr = oldAvg;
+    curr -= curr / count;
+    curr += newData / count;
+
+    // console.log('rolling avg', oldAvg, '=>', curr, `(count ${count} newdata ${newData})`);
+    return curr;
+};
+
 const AnalyticsHandler = {
     updateAverageKills: (newKills) => {
         const target = CONSTANTS.ANALYTIC;
@@ -198,13 +236,9 @@ const AnalyticsHandler = {
 
         if (!hasData) return setStat(target, KEYS.AVG_KILLS, +newKills);
 
-        let currAvg = dataCache[target][KEYS.AVG_KILLS];
-        currAvg -= currAvg / dataCache[target][KEYS.CHARS_SPAWNED];
-        currAvg += newKills / dataCache[target][KEYS.CHARS_SPAWNED];
-
-        // console.log(`adjust avg: was ${dataCache[target][KEYS.AVG_KILLS]} new data is ${newKills} now is ${currAvg}`);
-
-        setStat(target, KEYS.AVG_KILLS, currAvg);
+        const currAvg = dataCache[target][KEYS.AVG_KILLS];
+        const currSpawn = dataCache[target][KEYS.CHARS_SPAWNED];
+        setStat(target, KEYS.AVG_KILLS, computeRollingAverage(currAvg, currSpawn, newKills));
 
         // setStat(target, KEYS.AVG_KILLS, hasData ? Math.floor((dataCache[target][KEYS.AVG_KILLS] + parseInt(newKills)) / 2) : +newKills);
     },
@@ -225,6 +259,10 @@ const AnalyticsHandler = {
     },
     updateTotalAttacks: (amount) => {
         addStat(CONSTANTS.ANALYTIC, KEYS.TOTAL_ATTACKS, amount);
+    },
+    genericUpdate: (key, amount) => {
+        console.log(`\x1b[36m[AnalyticsHandler] Update key (${key}) with (${amount})\x1b[0m`);
+        addStat(CONSTANTS.ANALYTIC, key, amount);
     },
     updateLastTouch: () => {
         let d = new Date();
@@ -266,12 +304,14 @@ const compileData = () => {
             const temp = dataCache[key];
             result[key] = {
                 kills: temp[KEYS.KILLS],
-                deaths: temp[KEYS.DEATHS],
+                avgKills: temp[KEYS.AVG_KILLS],
                 damageDealt: temp[KEYS.DAMAGE_DEALTH],
                 spawns: temp[KEYS.SPAWNS],
                 trapDeaths: temp[KEYS.TRAP_DEATHS],
                 healed: temp[KEYS.HEALED],
                 attacks: temp[KEYS.ATTACKS],
+                twentyKillRuns: temp[KEYS.TWENTY_KILL_RUNS],
+                hundredKillRuns: temp[KEYS.HUNDRED_KILL_RUNS],
                 damagePerSpawn: divideMod(temp[KEYS.DAMAGE_DEALTH], temp[KEYS.SPAWNS]),
                 killsPerSpawn: divideMod(temp[KEYS.KILLS], temp[KEYS.SPAWNS]),
                 averageDamagePerAttack: divideMod(temp[KEYS.DAMAGE_DEALTH], temp[KEYS.ATTACKS]),
