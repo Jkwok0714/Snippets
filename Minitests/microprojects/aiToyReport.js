@@ -46,7 +46,11 @@ const KEYS = {
     HUNDRED_KILL_RUNS: 'hundredKillRuns',
     TEN_KILL_RUNS: 'tenKillRuns',
     TOTAL_TWENTY_KILL_RUNS: 'totalTwentyKillRuns',
-    TOTAL_HUNDRED_KILL_RUNS: 'totalHundredKillRuns'
+    TOTAL_HUNDRED_KILL_RUNS: 'totalHundredKillRuns',
+    TOTAL_TEN_KILL_RUNS: 'totalTenKillRuns',
+    TOTAL_MULTI_KILL_RUNS: 'totalMultiKillRuns',
+    MULTI_KILL_RUNS: 'multiKillRuns',
+    HIGHEST_UNDER_50: 'highestUnder50' // assassins spawn past 50, making it a cutoff
 };
 const ACTIONS = {
     REPORT_KILL: 'reportKill',
@@ -61,8 +65,6 @@ const LOG_PATH = pathJoin(__dirname, `/${CONSTANTS.FILE_NAME}`);
 let dataCache = {};
 let persistTimer;
 let touched = false;
-
-const app = express();
 
 /** 
  * 
@@ -97,8 +99,18 @@ const checkKillMilestones = (name, count) => {
         AnalyticsHandler.genericUpdate(KEYS.TOTAL_HUNDRED_KILL_RUNS, 1);
     } else if (count === 10) {
         addStat(name, KEYS.TEN_KILL_RUNS, 1);
+        AnalyticsHandler.genericUpdate(KEYS.TOTAL_TEN_KILL_RUNS, 1);
     }
 }
+
+const checkEndKillStats = (name, count) => {
+    if (count > 1) {
+        addStat(name, KEYS.MULTI_KILL_RUNS, 1);
+        AnalyticsHandler.genericUpdate(KEYS.TOTAL_MULTI_KILL_RUNS, 1);
+    }
+    const currHigh = dataCache[name][KEYS.HIGHEST_UNDER_50] || 0;
+    if (count >= currHigh && count < 50) setStat(name, KEYS.HIGHEST_UNDER_50, count);
+};
 
 const handleReportRequest = (action, dataTag, data1, data2) => {
     return new Promise((res) => {
@@ -119,6 +131,8 @@ const handleReportRequest = (action, dataTag, data1, data2) => {
                 addStat(dataTag, KEYS.DEATHS, 1);
                 addStat(dataTag, KEYS.DAMAGE_DEALTH, data2);
                 AnalyticsHandler.updateAverageKills(data1);
+
+                checkEndKillStats(dataTag, +data1);
 
                 const currAvg = dataCache[dataTag][KEYS.AVG_KILLS];
                 const currSpawns = dataCache[dataTag][KEYS.SPAWNS];
@@ -198,7 +212,8 @@ const initRow = (name) => {
         [KEYS.TEN_KILL_RUNS]: 0,
         [KEYS.TWENTY_KILL_RUNS]: 0,
         [KEYS.HUNDRED_KILL_RUNS]: 0,
-        [KEYS.AVG_KILLS]: 0
+        [KEYS.AVG_KILLS]: 0,
+        [KEYS.MULTI_KILL_RUNS]: 0
     };
 };
 
@@ -277,6 +292,7 @@ const AnalyticsHandler = {
 
 const initRoutine = () => {
     loadCache().then(() => {
+        // fill();
         CacheHandler.startSaving();
         AnalyticsHandler.init();
         console.log(`\x1b[32mListening on port ${CONSTANTS.SERVER_PORT}\x1b[0m`);
@@ -335,19 +351,19 @@ const printSomeStats = () => {
     printObj(results[CONSTANTS.ANALYTIC]);
 
     delete results[CONSTANTS.ANALYTIC];
-    const sortByKdr = sortFunc(results, 'kdr');
-    const printAmt = Math.min(sortByKdr.length, CONSTANTS.PRINT_AMT);
+    const sortedKeys = sortFunc(results, 'kdr');
+    const printAmt = Math.min(sortedKeys.length, CONSTANTS.PRINT_AMT);
 
     console.log(`\x1b[32m= TOP ${printAmt} KDR =\x1b[0m`);
     for (let i = 0; i < printAmt; i++) {
-        console.log(`\x1b[36m* ${sortByKdr[i]}\x1b[0m`);
-        printObj(results[sortByKdr[i]]);
+        console.log(`\x1b[36m* ${sortedKeys[i]}\x1b[0m`);
+        printObj(results[sortedKeys[i]]);
     }
     console.log(`\x1b[32m= BOTTOM ${printAmt} KDR =\x1b[0m`);
-    const adjLen = sortByKdr.length - 1;
-    for (let i = adjLen; i > adjLen - printAmt; i--) {
-        console.log(`\x1b[36m* ${sortByKdr[i]}\x1b[0m`);
-        printObj(results[sortByKdr[i]]);
+    const adjLen = sortedKeys.length - 1;
+    for (let i = adjLen - printAmt; i < sortedKeys.length; i++) {
+        console.log(`\x1b[36m* ${sortedKeys[i]}\x1b[0m`);
+        printObj(results[sortedKeys[i]]);
     }
 };
 
@@ -369,44 +385,63 @@ const printObj = (obj) => {
     if (string !== '') flush();
 };
 
+const fill = () => {
+    setStat(CONSTANTS.ANALYTIC, KEYS.TOTAL_TEN_KILL_RUNS, 0);
+    for (let key in dataCache) {
+        if (key !== CONSTANTS.ANALYTIC) {
+            
+            AnalyticsHandler.genericUpdate(KEYS.TOTAL_TEN_KILL_RUNS, dataCache[key][KEYS.TEN_KILL_RUNS]);
+        }
+    }
+}
+
 /**
  * 
  * Routes, listener
  * 
  */
 
-app.listen(CONSTANTS.SERVER_PORT, initRoutine);
-
-/**
- * ActionScript caller: loadVariablesNum("http://localhost:4001/report?data=test", 0);
- */
-app.get('/report', (req, res) => {
-    const { action, dataTag, data1, data2 } = req.query;
-    // console.log(`\x1b[36m[REPORT] Incoming [${action}] request received: { data tag: ${dataTag}, data: ${data1}, ${data2} }\x1b[0m`);
-    if (!action) return res.send('Missing dataTag or data query');
-
-    handleReportRequest(action, dataTag, data1, data2).then(() => {
-        res.send('Report reported');
+const server = () => {
+    const app = express();
+    app.listen(CONSTANTS.SERVER_PORT, initRoutine);
+    
+    /**
+     * ActionScript caller: loadVariablesNum("http://localhost:4001/report?data=test", 0);
+     */
+    app.get('/report', (req, res) => {
+        const { action, dataTag, data1, data2 } = req.query;
+        // console.log(`\x1b[36m[REPORT] Incoming [${action}] request received: { data tag: ${dataTag}, data: ${data1}, ${data2} }\x1b[0m`);
+        if (!action) return res.send('Missing dataTag or data query');
+    
+        handleReportRequest(action, dataTag, data1, data2).then(() => {
+            res.send('Report reported');
+        });
     });
-});
-
-app.get('/reportData', (req, res) => {
-    console.log('[reportData] Incoming request to see current status');
-    res.send(dataCache);
-});
-
-app.get('/', (req, res) => {
-    console.log('[/] Misc request received');
-    res.send('Invalid route to report.');
-});
-
-/**
- * Exit handler
- */
-process.on('SIGINT', () => {
-    AnalyticsHandler.updateLastTouch();
-    CacheHandler.endSaving().then(() => {
-        printSomeStats();
-        process.exit();
+    
+    app.get('/reportData', (req, res) => {
+        console.log('[reportData] Incoming request to see current status');
+        res.send(dataCache);
     });
-});
+    
+    app.get('/', (req, res) => {
+        console.log('[/] Misc request received');
+        res.send('Invalid route to report.');
+    });
+    
+    /**
+     * Exit handler
+     */
+    process.on('SIGINT', () => {
+        AnalyticsHandler.updateLastTouch();
+        CacheHandler.endSaving().then(() => {
+            printSomeStats();
+            process.exit();
+        });
+    });
+};
+
+const main = () => {
+    server();
+}
+
+main();
