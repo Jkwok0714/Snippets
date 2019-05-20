@@ -44,7 +44,12 @@ const KEYS = {
     PERCENT_OF_DAMAGE: 'percentOfDamage',
     KILLS_PER_SPAWN: 'killsPerSpawn',
     AVG_SPAWNS_PER_SESSION: 'avgSpawnsPerSession',
-    TOTAL_TEN_KILL_RUNS: 'totalTenKillRuns'
+    TOTAL_TEN_KILL_RUNS: 'totalTenKillRuns',
+    MULTI_KILL_RUNS: 'multiKillRuns',
+    MULTI_KILL_RATE: 'multiKillRate',
+    PERCENT_MULTI_KILL_RATE: 'percentMultiKillRate',
+    TOTAL_MULTI_KILL_RUNS: 'totalMultiKillRuns',
+    HIGHEST_UNDER_50: 'highestUnder50'
 };
 
 const LOG_PATH = pathJoin(__dirname, `/${CONSTANTS.FILE_NAME}`);
@@ -53,7 +58,8 @@ let dataCache = {};
 const FLAGS = [
     { flag: '-s', usage: 'sort' },
     { flag: '-h', usage: 'help' },
-    { flag: '-f', usage: 'find' }
+    { flag: '-f', usage: 'find' },
+    { flag: '-c', usage: 'csv' }
 ];
 
 const parseOptions = (args) => {
@@ -65,6 +71,8 @@ const parseOptions = (args) => {
             if (matchingFlag.length > 0) {
                 if (args[i] === '-h') {
                     options['help'] = true;
+                } else if (args[i] === '-c') {
+                    options['csv'] = true;
                 } else {
                     i++; // skip option
                     options[matchingFlag[0].usage] = args[i];
@@ -97,6 +105,8 @@ const compileData = () => {
         } else {
             const temp = dataCache[key];
             const killsPerSpawn = +((temp[KEYS.KILLS] / temp[KEYS.SPAWNS]).toFixed(2));
+            const multiKillPerSpawn = (temp[KEYS.MULTI_KILL_RUNS] || 0) / temp[KEYS.SPAWNS];
+            const globalMultiKillRate = globalAnalytic[KEYS.TOTAL_MULTI_KILL_RUNS] / globalAnalytic[KEYS.CHARS_SPAWNED];
             result[key] = {
                 kills: temp[KEYS.KILLS],
                 avgKills: temp[KEYS.AVG_KILLS],
@@ -106,11 +116,14 @@ const compileData = () => {
                 trapDeaths: temp[KEYS.TRAP_DEATHS],
                 healed: temp[KEYS.HEALED],
                 attacks: temp[KEYS.ATTACKS],
+                highestKillsUnder50: temp[KEYS.HIGHEST_UNDER_50] || 0,
                 damagePerSpawn: divideMod(temp[KEYS.DAMAGE_DEALTH], temp[KEYS.SPAWNS]),
                 tenKillRuns: temp[KEYS.TEN_KILL_RUNS],
                 twentyKillRuns: temp[KEYS.TWENTY_KILL_RUNS],
                 hundredKillRuns: temp[KEYS.HUNDRED_KILL_RUNS],
+                multiKillRuns: temp[KEYS.MULTI_KILL_RUNS] || 0,
                 killsPerSpawn: killsPerSpawn,
+                percentMultiKillRate: getPercent((temp[KEYS.MULTI_KILL_RUNS] || 0), temp[KEYS.SPAWNS]),
                 avgDmgPerAttack: divideMod(temp[KEYS.DAMAGE_DEALTH], temp[KEYS.ATTACKS]),
                 avgDmgPerKill: divideMod(temp[KEYS.DAMAGE_DEALTH], temp[KEYS.KILLS]),
                 avgAttacksPerKill: divideMod(temp[KEYS.ATTACKS], temp[KEYS.KILLS]),
@@ -122,7 +135,9 @@ const compileData = () => {
                 percentOfTenKillRuns: getPercent(temp[KEYS.TEN_KILL_RUNS], globalAnalytic[KEYS.TOTAL_TEN_KILL_RUNS]),
                 percentOfTwentyKillRuns: getPercent(temp[KEYS.TWENTY_KILL_RUNS], globalAnalytic[KEYS.TOTAL_TWENTY_KILL_RUNS]),
                 percentOfHundredKillRuns: getPercent(temp[KEYS.HUNDRED_KILL_RUNS], globalAnalytic[KEYS.TOTAL_HUNDRED_KILL_RUNS]),
-                WAR: killsPerSpawn - globalAnalytic[KEYS.AVG_KILLS]
+                kDiff: (killsPerSpawn - globalAnalytic[KEYS.AVG_KILLS]),
+                mkDiff: (multiKillPerSpawn - globalMultiKillRate),
+                WAR: (killsPerSpawn - globalAnalytic[KEYS.AVG_KILLS]) + (multiKillPerSpawn - globalMultiKillRate)
             };
         }
     }
@@ -135,7 +150,13 @@ const sortFunc = (results, key) => {
 }
 
 const sortFuncForPercentStrings = (results, key) => {
-    return Object.keys(results).sort((a, b) => (+(results[b][key].slice(0, -1))) - (+(results[a][key].slice(0, -1))));
+    try {
+        return Object.keys(results).sort((a, b) => {
+            return parseFloat(results[b][key].slice(0, -1)) - parseFloat(results[a][key].slice(0, -1));
+        });
+    } catch (e) {
+        console.log('Err', e, key);
+    }
 }
 
 const printGlobal = (results) => {
@@ -146,26 +167,35 @@ const printGlobal = (results) => {
     delete results[CONSTANTS.ANALYTIC];
 }
 
+const isPercent = (statName) => {
+    return statName.indexOf('percent') !== -1;
+}
+
+const removeFromKeyList = (arr, key) => {
+    arr.splice(arr.indexOf(key), 1);
+}
+
 const printSomeStats = (stat) => {
     const results = compileData();
 
     printGlobal(results);
 
     let statdisp = stat || 'kdr';
-    const sortedKeys = sortFunc(results, statdisp);
+    let sortedKeys = isPercent(statdisp) ? sortFuncForPercentStrings(results, statdisp) : sortFunc(results, statdisp);
+    removeFromKeyList(sortedKeys, 'Hunter');
     const printAmt = Math.min(sortedKeys.length, CONSTANTS.PRINT_AMT);
 
-    statdisp = statdisp.toUpperCase();
-    console.log(`\x1b[32m= TOP ${printAmt} ${statdisp} =\x1b[0m`);
+    const statdispDisplay = statdisp.toUpperCase();
+    console.log(`\x1b[32m= TOP ${printAmt} ${statdispDisplay} =\x1b[0m`);
     for (let i = 0; i < printAmt; i++) {
         console.log(`\x1b[36m*[${i + 1}] ${sortedKeys[i]}\x1b[0m`);
-        printObj(results[sortedKeys[i]]);
+        printObj(results[sortedKeys[i]], statdisp);
     }
-    console.log(`\x1b[32m= BOTTOM ${printAmt} ${statdisp} =\x1b[0m`);
+    console.log(`\x1b[32m= BOTTOM ${printAmt} ${statdispDisplay} =\x1b[0m`);
     const adjLen = sortedKeys.length - 1;
     for (let i = adjLen - printAmt; i < sortedKeys.length; i++) {
         console.log(`\x1b[36m*[${i + 1}] ${sortedKeys[i]}\x1b[0m`);
-        printObj(results[sortedKeys[i]]);
+        printObj(results[sortedKeys[i]], statdisp);
     }
 };
 
@@ -183,6 +213,7 @@ const printStatsFor = (name) => {
             byTwentyKillRuns: sortFunc(results, KEYS.TWENTY_KILL_RUNS),
             byPercentKills: sortFuncForPercentStrings(results, KEYS.PERCENT_OF_KILLS),
             byPercentDamage: sortFuncForPercentStrings(results, KEYS.PERCENT_OF_DAMAGE),
+            byMultiKillRate: sortFuncForPercentStrings(results, KEYS.PERCENT_MULTI_KILL_RATE),
             byAvgSpawns: sortFunc(results, KEYS.AVG_SPAWNS_PER_SESSION),
             byWAR: sortFunc(results, KEYS.WAR),
             entries: Object.keys(results).length
@@ -202,16 +233,17 @@ const printSingleCharsDetail = (name, results, sortedCache) => {
     const charInfo = results[name];
     printObj(charInfo);
     console.log(`\x1b[35m  Rankings\x1b[0m`);
-    console.log(`  KDR: \x1b[33m#${getRank(name, sortedCache.byKdr)}/${sortedCache.entries}\x1b[0m`);
     console.log(`  10-Kill Runs: \x1b[33m#${getRank(name, sortedCache.byTenKillRuns)}/${sortedCache.entries}\x1b[0m`);
     console.log(`  20-Kill Runs: \x1b[33m#${getRank(name, sortedCache.byTwentyKillRuns)}/${sortedCache.entries}\x1b[0m`);
     console.log(`  % of Kills: \x1b[33m#${getRank(name, sortedCache.byPercentKills)}/${sortedCache.entries}\x1b[0m`);
     console.log(`  % of Damage: \x1b[33m#${getRank(name, sortedCache.byPercentDamage)}/${sortedCache.entries}\x1b[0m`);
     console.log(`  Avg Spawns/Session: \x1b[33m#${getRank(name, sortedCache.byAvgSpawns)}/${sortedCache.entries}\x1b[0m`);
+    console.log(`  KDR: \x1b[33m#${getRank(name, sortedCache.byKdr)}/${sortedCache.entries}\x1b[0m`);
+    console.log(`  Multi-Kill Rate: \x1b[33m#${getRank(name, sortedCache.byMultiKillRate)}/${sortedCache.entries}\x1b[0m`);
     console.log(`  WAR: \x1b[33m#${getRank(name, sortedCache.byWAR)}/${sortedCache.entries}\x1b[0m`);
 }
 
-const printObj = (obj) => {
+const printObj = (obj, highlightKey) => {
     let string = '';
     let rot = 0;
     const flush = () => {
@@ -220,7 +252,8 @@ const printObj = (obj) => {
         string = '';
     }
     for (let key in obj) {
-        string += `${key}: \x1b[33m${typeof obj[key] === 'number' ? parseFloat(obj[key].toFixed(4)) : obj[key]}\x1b[0m  `;
+        const keyPrint = key === highlightKey ? `\x1b[4m${key}\x1b[0m` : key;
+        string += `${keyPrint}: \x1b[33m${typeof obj[key] === 'number' ? parseFloat(obj[key].toFixed(4)) : obj[key]}\x1b[0m  `;
         rot++;
         if (rot % CONSTANTS.DATA_PER_ROW === 0) {
             flush();
@@ -263,6 +296,8 @@ const main = () => {
         console.log(`[main] options parsed sort by ${sortBy}`);
         if (options['find']) {
             printStatsFor(options['find']);
+        } else if (options['csv']) {
+            writeCsv();
         } else {
             printSomeStats(sortBy);
         }
