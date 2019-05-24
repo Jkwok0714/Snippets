@@ -21,7 +21,7 @@ const {
 const CONSTANTS = {
     SERVER_PORT: 4001,
     FILE_NAME: 'aiToy.log', // pretty bad practice to use json, and then in a .log file lol
-    PERSIST_INTERVAL: 30 * 1000,
+    PERSIST_INTERVAL: 60 * 1000,
     ANALYTIC: '0_analytics',
     DATA_PER_ROW: 3,
     PRINT_AMT: 10
