@@ -1,0 +1,9 @@
+{
+    "name": "package-print",
+    "version": "0.0.1",
+    "description": "I refused to direct copy-paste this tutorial",
+    "main": "main.js",
+    "bin": "bin.js",
+    "author": "nobody",
+    "license": "MIT"
+}
