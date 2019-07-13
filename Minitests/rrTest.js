@@ -1,3 +1,7 @@
+/**
+ * Simulating some style of server selection algorithm
+ */
+
 // Config
 let customServerCount, customRunAmount;
 try {

@@ -2,7 +2,7 @@ module.exports = {
   artifacts: [
     'Relinqian Dagger',
     'Lugeran Staff',
-    'Acareme Crossbow',
+    'Acareme Repeating Crossbow',
     'Tower Shield of Eseroth',
     'Toast Lure',
     'Alonian Glacier Staff',
@@ -10,7 +10,7 @@ module.exports = {
     'Karrier\'s Fort Dirt Wad',
     'Book of Harkoum',
     'Auto Lute of Acarime',
-    'Valins Sword',
+    'Valin\'s Sword',
     'Linvi\'s Bow',
     'Varias\'s Sky Blue Undies',
     'Cathedral World Map',
@@ -60,4 +60,14 @@ module.exports = {
     'Outer Circle',
     'Ireae'
   ]
+  weapons: {
+    sword: ['Arming sword', 'Longsword', 'Gladius', 'Zweihander', 'Rapier', 'Smallsword', 'Kilij', 'Scimitar', 'Mameluke', 'Dadao', 'Katana', 'Falchion', 'Estoc'],
+    dagger: ['Dirk', 'Knife', 'Swordbreaker', 'Bollock', 'Roundel', 'Spike', 'Tanto', 'Main Gauche'],
+    bow: ['Yumi', 'Longbow', 'Recurve Bow', 'Crossbow', 'Horse Bow', 'Composite Bow'],
+    staff: ['Quarterstaff', 'Bō', 'Stick', 'Staff', 'Bladed Staff'],
+    spear: ['Pike', 'Yari', 'Glaive', 'Halberd', 'Guandao', 'Naginata', 'Trident', 'Guisarme', 'Javelin'],
+    axe: ['Handaxe', 'Bearded Axe', 'Ono', 'Throwing Axe', 'Tomahawk', 'Broad Axe', 'Sickle'],
+    mace: ['Morningstar', 'Club', 'Mace', 'Flail', 'Warhammer'],
+    none: []
+  }
 }

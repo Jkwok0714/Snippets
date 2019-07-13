@@ -1,3 +1,7 @@
+/**
+ * Build a file list for a directory
+ */
+
 const { stat, statSync, readdir } = require('fs');
 const testFilePath = 'gitIgnoreThis';
 

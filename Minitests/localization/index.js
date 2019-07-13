@@ -1,3 +1,7 @@
+/**
+ * String replacement e.g. for localization or custom text
+ */
+
 const localizations = {
   en: {
     lz_today: 'Today is',
