@@ -59,7 +59,7 @@ module.exports = {
     'Amina',
     'Outer Circle',
     'Ireae'
-  ]
+  ],
   weapons: {
     sword: ['Arming sword', 'Longsword', 'Gladius', 'Zweihander', 'Rapier', 'Smallsword', 'Kilij', 'Scimitar', 'Mameluke', 'Dadao', 'Katana', 'Falchion', 'Estoc'],
     dagger: ['Dirk', 'Knife', 'Swordbreaker', 'Bollock', 'Roundel', 'Spike', 'Tanto', 'Main Gauche'],
