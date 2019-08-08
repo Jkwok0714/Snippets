@@ -2,8 +2,8 @@
  * Using async-await in different ways and comparing against raw promises
  */
 
-const junk = require('../junkData');
-const UTIL = require('./utility');
+const junk = require('../../junkData');
+const UTIL = require('../utility');
 
 /* How long to wait to resolve simulated async funcs */
 const WAIT_TIME = 1000;

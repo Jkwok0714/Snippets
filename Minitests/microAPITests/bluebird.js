@@ -2,7 +2,7 @@ var Promise = require('bluebird');
 var request = Promise.promisifyAll(require('request'));
 var fs = Promise.promisifyAll(require('fs'));
 var cron = require('node-cron');
-var helpers = require('./nodeHelper')
+var helpers = require('../nodeHelper')
 
 var path = './trashOutput/testFile.txt';
 

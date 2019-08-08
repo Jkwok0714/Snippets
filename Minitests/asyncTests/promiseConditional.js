@@ -1,4 +1,4 @@
-const UTIL = require('./utility');
+const UTIL = require('../utility');
 
 const NUM_TESTS = 5;
 const VALUES = {
