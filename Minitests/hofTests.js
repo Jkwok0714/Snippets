@@ -36,14 +36,31 @@ const highbrowForLoop = (n, fnc) => {
     Array.from({ length: n }, (_, i) => fnc(i));
 };
 
-/*
+/**
+ * .uniq function that looks at a certain key in the objects of the array.
+ * Obviously the objects are all expected to be the same type.
+ * The idea is to make an array of the key values, and filter back with it
+ * If they are primitives just make a Set, which will remove duplicates.
+ * @param {Object[]} arr
+ * @param {string} key
+ */
+const uniqueArrayByKey = (arr, key) => {
+    return key
+        ? arr.map(e => e[key])
+            .map((e, i, final) => final.indexOf(e) === i && i)
+            .filter(e => arr[e])
+            .map(e => arr[e])
+        : [...new Set(arr)];
+};
+
+/* ======
  * Test Methods
  */
 const announceTest = (testName) => {
     console.log(`\x1b[32m== Now running test: ${testName} ==\x1b[0m`);
 };
 
-/*
+/* ======
  * Test Runner
  */
 const main = () => {
