@@ -2,6 +2,7 @@
  * A test to make a simple reusable wrapper for a class whose functions use callbacks, for legacy support.
  * @file Trying to test a wrapper around a set of callback-based functions.
  * @author me lol
+ * Created Aug 7 2019
  */
 
 const { promisify } = require('util');

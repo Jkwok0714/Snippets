@@ -1,3 +1,11 @@
+/**
+ * @file Using try-catch with asynnc operations thanks to the magic of async/await
+ */
+
+ /**
+  * A standard little async function
+  * @param {Function} callback 
+  */
 const someAsyncThing = (callback) => {
   try {
     throw new Error('D-mail');

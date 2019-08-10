@@ -1,11 +1,12 @@
 /**
  * Helper file
  * Shares many methods with the listener tool, should prob use shared funcs/consts
+ * @file Helper file companion to aiToyReport.js
+ * Created May 17 2019
  */
 
 const { join: pathJoin } = require('path');
 const {
-    writeFile,
     createReadStream,
     existsSync
 } = require('fs');

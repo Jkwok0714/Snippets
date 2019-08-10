@@ -1,5 +1,6 @@
 /**
- * Testing three different trigger methods yet again
+ * @file Testing three different trigger methods yet again
+ * Created Feb 16 2019
  */
 const TIMEOUT = 1000;
 

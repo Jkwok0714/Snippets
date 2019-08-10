@@ -1,4 +1,9 @@
 /**
+ * @file A test of a timed loop for async for loops
+ * Created Jul 23 2019
+ */
+
+/**
  * A for loop functionality but with async delay
  * @param {number} i Where to start iteration
  * @param {*[]} arr Input data

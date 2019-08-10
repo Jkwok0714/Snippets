@@ -1,5 +1,6 @@
 /**
- * Testing converting older async function patterns into async-await
+ * @file Testing converting older async function patterns into async-await
+ * Created Jul 31 2019
  */
 
 const ASYNC_INTERVAL = 2000;
@@ -68,10 +69,6 @@ const main = () => {
         logIt('Main', 'Finally, ending the interval and closing the process.');
         clearInterval(timerRunner);
     });
-    // }).finally(() => {
-    //     console.log(`[Main:${timer}] Finally ran, ending setInterval.`);
-    //     clearInterval(timerRunner);
-    // });
 };
 
 /**

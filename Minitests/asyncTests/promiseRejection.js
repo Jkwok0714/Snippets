@@ -1,3 +1,7 @@
+/**
+ * @file Testing promise rejections??
+ */
+
 console.log('\x1b[36m*** Start of file ***\x1b[0m');
 
 process.on('uncaughtException', (e) => {
@@ -6,7 +10,7 @@ process.on('uncaughtException', (e) => {
 });
 
 const doThingThatWillError = (notParseable) => {
-  return new Promise ((resolve, reject) => {
+  return new Promise (resolve => {
     let result = JSON.parse(notParseable);
     resolve(result);
   });

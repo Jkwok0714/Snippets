@@ -1,3 +1,7 @@
+/**
+ * @file Test conditional promise patterns
+ */
+
 const UTIL = require('../utility');
 
 const NUM_TESTS = 5;
@@ -6,8 +10,11 @@ const VALUES = {
   B: 'async1b'
 }
 
+/**
+ * The first in the chain, which will decide what's the next function
+ */
 const async1 = () => {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     setTimeout(() => {
       if (Math.random() < 0.5) {
         resolve(VALUES.A);
@@ -18,23 +25,35 @@ const async1 = () => {
   });
 };
 
+/**
+ * Option A to be second in the chain
+ * @param {string} input 
+ */
 const async2 = (input) => {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     setTimeout(() => {
       resolve(input + '\nprocessed by async2');
     }, 100);
   });
 };
 
+/**
+ * Option B to be second in the chain
+ * @param {string} input 
+ */
 const async3 = (input) => {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     setTimeout(() => {
       resolve(input + '\nprocessed by async3');
     }, 100);
   });
 };
 
+/**
+ * Main process runner
+ */
 const main = () => {
+  /** Convoluted way to start up a loop  :)  */
   let looper = new Array(NUM_TESTS).fill('a');
 
   UTIL.promiseLoop(looper, (item, done) => {

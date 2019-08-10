@@ -1,5 +1,6 @@
 /**
- * Using async-await in different ways and comparing against raw promises
+ * @file Using async-await in different ways and comparing against raw promises
+ * Created Feb 7 2019
  */
 
 const junk = require('../../junkData');
@@ -8,14 +9,19 @@ const UTIL = require('../utility');
 /* How long to wait to resolve simulated async funcs */
 const WAIT_TIME = 1000;
 
-/* Generic function that calls a promise based function */
+/**
+ * Generic function that calls a promise based function
+ * @param {boolean} rng
+ */
 const asyncWithAsync = async (rng = false) => {
     const result = await genericAsyncFunction(rng);
     console.log('*Async result:', result);
     return result;
 };
 
-/* Test calling consecutive async functions */
+/**
+ * Test calling consecutive async functions
+ */
 const chainAsync = async () => {
     announceTest('Chain Async');
     await asyncWithAsync();
@@ -25,7 +31,10 @@ const chainAsync = async () => {
     console.log('\x1b[35mchainAsync complete\x1b[0m');
 };
 
-/* Test calling consecutive async with a loop */
+/**
+ * Test calling consecutive async with a loop
+ * @param {number} n Loop number
+ */
 const chainAsyncLoop = async (n) => {
     announceTest(`Async for loop ${n}x`);
     for (let i = 0; i < n; i++) {
@@ -35,7 +44,10 @@ const chainAsyncLoop = async (n) => {
     console.log('\x1b[35mchainAsyncLoop complete\x1b[0m');
 };
 
-/* As above but with forEach; does not preserve order, calls concurrent */
+/**
+ * As above but with forEach; does not preserve order, calls concurrent
+ * @param {number} n Loop number
+ */
 const chainAsyncForEach = async (n) => {
     announceTest(`Async forEach loop ${n}x`);
     new Array(n).fill('').forEach(async (_, i) => {
@@ -46,7 +58,9 @@ const chainAsyncForEach = async (n) => {
     console.log('\x1b[35mchainAsyncForEach complete\x1b[0m');
 };
 
-/* Using try-catch with async functions */
+/**
+ * Using try-catch with async functions
+ */
 const asyncTryCatch = async () => {
     announceTest('Async Try-Catch');
     try {
@@ -57,7 +71,9 @@ const asyncTryCatch = async () => {
     }
 };
 
-/* Using a conditional with async functions depending on result */
+/**
+ * Using a conditional with async functions depending on result
+ */
 const conditionalAwait = async () => {
     announceTest('Conditional Await');
     let result = await asyncWithAsync();
@@ -71,14 +87,19 @@ const conditionalAwait = async () => {
     return result;
 };
 
-/* Call an async function that doesn't work */
+/**
+ * Call an async function that doesn't work
+ */
 const callAsyncFunctionDirectly = async () => {
     announceTest('Call async setTimeout directly');
     const chosenName = await genericAsyncFunctionAsync();
     console.log('\x1b[35mChose', chosenName, '\x1b[0m');
 };
 
-/* Test if callback runs at the end of an async chain */
+/**
+ * Test if callback runs at the end of an async chain
+ * @param {function} callback
+ */
 const runAllThenCallCallback = async (callback) => {
     announceTest('Await then callback');
     await asyncWithAsync();
@@ -86,7 +107,9 @@ const runAllThenCallCallback = async (callback) => {
     callback();
 };
 
-/* Run tests but with async/await */
+/**
+ * Run tests but with async/await
+ */
 const testRunnerNewMethod = async () => {
     announceTest('Main but with await');
     const loopTimes = UTIL.getRngBetween(3, 5);
@@ -103,7 +126,10 @@ const testRunnerNewMethod = async () => {
     console.log('\x1b[35m** testRunnerNewMethod Completed **\x1b[0m');
 };
 
-/* Multiple loops back to back deoending on results */
+/**
+ * Multiple loops back to back deoending on results
+ * @param {number} n
+ */
 const useNestedAsync = async (n) => {
     announceTest('Nested Await Builder')
     let characterList = [];
@@ -116,14 +142,15 @@ const useNestedAsync = async (n) => {
     console.log('\x1b[35mCharacters armed:\n', characterList.map(c => `${c.name} - ${c.chosenEq || 'None'}`).join(', '), '\x1b[0m');
 };
 
-/*
+/**
  * Test Methods
+ * @param {string} testName The name of the test to print
  */
 const announceTest = (testName) => {
     console.log(`\x1b[32m== Now running test: ${testName} ==\x1b[0m`);
 };
 
-/*
+/**
  * Test runner
  */
 const main = () => {
@@ -138,8 +165,9 @@ const main = () => {
     .then(() => testRunnerNewMethod())
 };
 
-/*
+/**
  * Generic filler functions for using with tests
+ * @param {boolean} rng
  */
 const genericAsyncFunction = (rng = false) => {
     return new Promise(res => {
@@ -150,13 +178,19 @@ const genericAsyncFunction = (rng = false) => {
     });
 };
 
-/* Async with return doesn't work, needs promise */
+/**
+ * Async with return doesn't work, needs promise
+ */
 const genericAsyncFunctionAsync = async () => {
     setTimeout(() => {
         return UTIL.chooseRandom(junk.inhabitants).name;
     }, WAIT_TIME);
 };
 
+/**
+ * Return a random character from the Character junk data
+ * @param {boolean} rng 
+ */
 const genericAsyncFunctionCharacter = (rng = false) => {
     return new Promise(res => {
         setTimeout(() => {
@@ -167,6 +201,9 @@ const genericAsyncFunctionCharacter = (rng = false) => {
     });
 };
 
+/**
+ * Generic async function that will reject
+ */
 const genericFailFunction = () => {
     return new Promise((res, rej) => {
         setTimeout(() => {
@@ -176,8 +213,13 @@ const genericFailFunction = () => {
     });
 };
 
+/**
+ * Select a weapon according to the type a character can equip
+ * @param {Object} character 
+ * @param {('sword' | 'dagger' | 'bow' | 'staff' | 'spear' | 'axe' | 'mace')} character.weapon The class of weapon that will be selected
+ */
 const getItemsForCharacter = (character) => {
-    return new Promise((res, rej) => {
+    return new Promise(res => {
         setTimeout(() => {
             const { weapon } = character;
             const item = UTIL.chooseRandom(junk.weapons[weapon.toLowerCase()]);
@@ -187,12 +229,19 @@ const getItemsForCharacter = (character) => {
     });
 };
 
+/**
+ * Generic async filler function
+ * @param {number} time Time to wait for in ms
+ */
 const wait = (time) => {
     return new Promise(res => {
         setTimeout(res, time);
     });
 };
 
+/**
+ * A sample callback to run at the end of an async operation
+ */
 const sampleCallback = () => {
     console.log('\x1b[35mHeeeeere\'s a callback\x1b[0m');
 };
