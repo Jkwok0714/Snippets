@@ -1,3 +1,8 @@
+/**
+ * @file Try using the Trello API to perform a few board operations
+ * Created Oct 24 2018
+ */
+
 const request = require('request');
 const { promisify } = require('util');
 const get = promisify(request.get);
@@ -11,6 +16,11 @@ const authQuery = `key=${apiKey}&token=${apiToken}`;
 const sourceListIndex = 0;
 const targetListIndex = 1;
 
+/**
+ * Async looper
+ * @param {*[]} array 
+ * @param {Function} task 
+ */
 const promiseLoop = (array, task) => {
   let pLoop = array.map(item => {
     return new Promise((res, rej) => {
@@ -28,6 +38,13 @@ const urlTypes = {
   putCard: 2
 }
 
+/**
+ * Construct the URL used to access the API
+ * @param {number} type 
+ * @param {Object} params
+ * @param {number=} params.listId
+ * @param {number=} params.cardId
+ */
 const constructUrl = (type, params) => {
   switch (type) {
     case urlTypes.getLists:
@@ -41,6 +58,9 @@ const constructUrl = (type, params) => {
   }
 }
 
+/**
+ * Main test runner
+ */
 const main = () => {
   let listData;
   // Get the lists for this board

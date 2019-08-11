@@ -1,4 +1,7 @@
-//Find duplicate characters
+/**
+ * @file The iSunique problem from CTCI, finding duplicate characters
+ * Created Dec 3 2017
+ */
 
 let isUnique = (string) => {
   let tracker = {};

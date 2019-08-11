@@ -1,3 +1,8 @@
+/**
+ * @file A test of the Redux store and seeing how to manipulate it
+ * Created Oct 3 2017
+ */
+
 const Redux = require('Redux');
 
 const ADD_TRIP = 'ADD_TRIP';

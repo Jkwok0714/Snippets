@@ -1,5 +1,6 @@
 /**
- * Some utility functions needlessly made into a class
+ * @file Some utility functions needlessly made into a class
+ * Created Aug 17 2018
  */
 
 class Utility {

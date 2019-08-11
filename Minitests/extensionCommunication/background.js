@@ -1,3 +1,8 @@
+/**
+ * @file The background script for a test Chrome extension. Looking to test communication between elements
+ * Created Aug 13 2018
+ */
+
 console.log('Background script firing up');
 
 const communicationURL = 'http://localhost:3002';

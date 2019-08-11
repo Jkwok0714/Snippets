@@ -1,3 +1,8 @@
+/**
+ * @file Test using the API for the mighty AWS
+ * Created Oct 23 2017
+ */
+
 var AWS = require('aws-sdk');
 var elasticsearch = require('elasticsearch');
 var client = new elasticsearch.Client({

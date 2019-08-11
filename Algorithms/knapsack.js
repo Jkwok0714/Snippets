@@ -1,3 +1,8 @@
+/**
+ * @file Knapsack problem where we try to maximize fitting stuff in a sack? Two implementations
+ * Created Nov 21 2017
+ */
+
 //Dynamic programming approach
 
 var range = function (n, elm) {

@@ -11,9 +11,6 @@
 - `/packageTest`: Packing a piece into an executable.. maybe
 - `/peethonStuff`: Little bits and pieces done in Python
 - `/socket-spawn-test`: Spawn child processes, managing socket connections
-- `/SqliteTest`: Using sqlite
-- `/tabCaptureTest`: Chrome tab capturing API
-- `/tabTargeter`: Trying to target different tabs on a Chrome window
 - `/utility`: Small helper bits that can be used in other tests
 - `/utilTests`: Utility type projects, such as loggers, fs watchers, messaging
 - `/wasm`: Web assembly compiler test

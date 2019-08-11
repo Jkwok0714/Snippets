@@ -1,5 +1,6 @@
 /** 
- * Writing the stack trace when a function is called or error thrown
+ * @file Writing the stack trace when a function is called or error thrown
+ * Created Apr 10 2018
  */
 
 let tracer = (msg) => {

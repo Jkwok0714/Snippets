@@ -1,4 +1,7 @@
-//PASCAL'S TRIANGLE FROM INTERVIEW PREP ATTEMPT 8/31/17
+/**
+ * @file Interview prep problem: Pascal's triangle where we build a triangle
+ * Created Aug 31 2017
+ */
 
 /**
  * @param {number} numRows

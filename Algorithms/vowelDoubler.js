@@ -1,3 +1,8 @@
+/**
+ * @file A vowel doubler for interview practice
+ * Created Oct 23 2017
+ */
+
 /*
 Given an array of characters, return the array with every vowel doubled. For example:
 

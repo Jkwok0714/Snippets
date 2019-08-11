@@ -1,3 +1,7 @@
+/**
+ * @file Bogus dummy data to feed into different tests and mechanisms. All hail the Valkalore.
+ */
+
 module.exports = {
   artifacts: [
     'Relinqian Dagger',

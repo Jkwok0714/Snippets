@@ -1,3 +1,8 @@
+/**
+ * @file Implementation of array unions and intersections.
+ * Created Dec 13 2017
+ */
+
 let getUnion = (arr1, arr2) => {
   let result = [];
 

@@ -1,3 +1,8 @@
+/**
+ * @file Trying out the textbelt API
+ * Created Oct 17 2017
+ */
+
 var text = require('textbelt');
 
 const textelt = process.argv[2];

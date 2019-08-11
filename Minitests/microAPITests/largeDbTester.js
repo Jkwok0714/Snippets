@@ -1,3 +1,8 @@
+/**
+ * @file See what happens when a database is spammed with nonsense
+ * Created Oct 20 2017
+ */
+
 var mysql = require('mysql');
 var Sequelize = require('sequelize');
 var faker = require('faker');

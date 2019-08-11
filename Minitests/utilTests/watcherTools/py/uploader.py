@@ -1,3 +1,5 @@
+# Py watcher-uploader, Created Oct 6 2018
+
 # Imports
 import paramiko, sys, os
 from config import config

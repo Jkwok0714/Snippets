@@ -1,4 +1,8 @@
-// Solution by Jack Qiu
+/**
+ * @file Jack Qiu's (HRSF81) solution to Sum of BTree Columns
+ * @author Jack Qiu
+ * Created Aug 31 2017
+ */
 
 var sumColumns = function(tree){
 

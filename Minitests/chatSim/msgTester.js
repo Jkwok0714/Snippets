@@ -1,3 +1,8 @@
+/**
+ * @file A message tester prototype for Timder project
+ * Created Nov 3 2017
+ */
+
 const generator = require('./generator.js');
 
 const Chance = require('chance');

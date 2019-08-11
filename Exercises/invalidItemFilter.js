@@ -1,3 +1,8 @@
+/**
+ * @file A quick filter to see  what was removed in an array given both its states
+ * Created Apr 24 2018
+ */
+
 //A quick filter by using a set
 let filterByArray = (original, filter) => {
   let set = new Set(filter);

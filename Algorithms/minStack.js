@@ -1,3 +1,8 @@
+/**
+ * @file An implementation of the minStack problem using a stack
+ * Created Apr 30 2018
+ */
+
 class Stack {
     constructor () {
         this.items = [];
@@ -22,7 +27,9 @@ class Stack {
     }
 }
 
-// Implementation of MinStack that stores the differences between the element and the min
+/** 
+ * Implementation of MinStack that stores the differences between the element and the min
+ */
 class MinStack {
   constructor () {
     this.min = null;

@@ -1,3 +1,8 @@
+/**
+ * @file Test back-end for the extension communication test to make sure things are communicating
+ * Created Aug 13  2018
+ */
+
 var express = require('express');
 var app = express();
 

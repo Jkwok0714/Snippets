@@ -1,5 +1,6 @@
 /**
- * Scanning a directory for JSON and aggregating their data into one object
+ * @file Scanning a directory for JSON and aggregating their data into one object
+ * Created Aug 15 2018
  */
 
 const fs = require('fs');
@@ -17,6 +18,11 @@ const encoding = 'utf8';
 
 console.log(promiseLoop);
 
+/**
+ * Get a list of paths, loading just a specific type of file
+ * @param {string} searchPath The directory to look in
+ * @param {( 'json' )} loadType The type of file to load
+ */
 const getPathList = (searchPath, loadType) => {
   return new Promise((resolve, reject) => {
     readdir(searchPath).then(items => {
@@ -35,6 +41,10 @@ const getPathList = (searchPath, loadType) => {
   });
 }
 
+/**
+ * Combine everything. Could probably use array.reduce as well
+ * @param {Object[]} array 
+ */
 const combineJSON = (array) => {
   let result = {};
   array.forEach(obj => Object.assign(result, obj));

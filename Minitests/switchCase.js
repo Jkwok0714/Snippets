@@ -1,5 +1,6 @@
 /**
- * Playing around with using an object to store function calls instead of if/switch usage
+ * @file Playing around with using an object to store function calls instead of if/switch usage
+ * Created Aug 13 2018
  */
 
 const LOCATIONS = {

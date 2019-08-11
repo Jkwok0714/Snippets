@@ -1,3 +1,8 @@
+/**
+ * @file Interview practice with tree path sum problem
+ * Created Sep 28 2017
+ */
+
 var Tree = function(value) {
   this.value = value;
   this.children = [];

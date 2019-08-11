@@ -1,4 +1,8 @@
-// Message bus pseudocode
+/**
+ * @file Message bus pseudocode for practice. Don't think it works..
+ * Created Nov 1 2017
+ */
+
 class MessageBus {
   constructor() {
     this.name = 'MUNI';

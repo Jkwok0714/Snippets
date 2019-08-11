@@ -1,4 +1,7 @@
 #!/bin/python3
+
+# OOP in Python test. Created Aug 14 2018
+
 import random
 
 def getBeer():

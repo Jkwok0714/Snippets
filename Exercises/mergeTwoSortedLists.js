@@ -1,3 +1,8 @@
+/**
+ * @file Merge two sorted linked lists problem
+ * Created Dec 5 2017
+ */
+
 //Merge two sorted linked lists
 let sortedMerge = (list1, list2) => {
   let result = new LinkedList();

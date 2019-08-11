@@ -1,3 +1,8 @@
+/**
+ * @file Tackling the GenerateParenthesis problem.
+ * Created Dec 6 2017
+ */
+
 /*
 Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
 
@@ -19,8 +24,8 @@ let generateParenthesis = (num) => {
     if (string.length === num * 2) {
       results.push(string);
     } else {
-      //Still have opening brackets to use
-      //We can open one or close one
+      /*  Still have opening brackets to use */
+      /* We can open one or close one */
       if (numOpened < num)
         innerRecurse(numOpened + 1, numClosed, string + '(');
       if (numClosed < numOpened)

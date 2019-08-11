@@ -1,9 +1,13 @@
+/**
+ * @file Get the difference between arrays
+ * Created Oct 5 2018
+ */
+
 const arr1 = [1, 2, 3, 4];
 const arr2 = [3, 4, 5, 2];
 
 const compareChanges = (arr1, arr2) => {
   let added = [], removed = [];
-  let hash = {};
 
   let newList = new Set(arr2);
   let oldList = new Set(arr1);

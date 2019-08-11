@@ -1,3 +1,8 @@
+/**
+ * @file Find t he longest common prefix between n words in nm time
+ * Created Dec 3 2017
+ */
+
 //Between n words find longest common prefix
 
 let longestCommonPrefix = (array) => {

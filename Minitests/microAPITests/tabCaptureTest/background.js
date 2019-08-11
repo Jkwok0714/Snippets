@@ -1,3 +1,8 @@
+/**
+ * @file The extension background scripts page for the tab capturer test
+ * Created Aug 22 2018
+ */
+
 let capturers = {};
 
 const actions = {

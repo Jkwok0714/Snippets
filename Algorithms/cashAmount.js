@@ -1,3 +1,8 @@
+/**
+ * @file CashAmount class implementation for timed practice
+ * Created Sep 21 2017
+ */
+
 class CashAmount {
   constructor (amount) {
     this.value = amount * 100;

@@ -1,4 +1,7 @@
-//Insertion Sort
+/**
+ * @file Simple insertion sort implementation
+ * Created Nov 29 2017
+ */
 
 let insertionSort = (arr) => {
   //Iterate through ever element of the array

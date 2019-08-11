@@ -1,3 +1,8 @@
+/**
+ * @file File
+ * Created Sep 17 2017
+ */
+
 var Promise = require('bluebird');
 var request = Promise.promisifyAll(require('request'));
 var fs = Promise.promisifyAll(require('fs'));

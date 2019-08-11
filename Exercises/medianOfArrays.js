@@ -1,3 +1,8 @@
+/**
+ * @file Find the media of two arrays in log time
+ * Created Dec 5 2017
+ */
+
 /*
 Example 1:
 nums1 = [1, 3]

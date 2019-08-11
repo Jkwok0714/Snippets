@@ -1,3 +1,8 @@
+/**
+ * @file Find the two numbers in an array that add to a given number, in n time
+ * Created Dec 3 2017
+ */
+
 let twoSum = (array, sum) => {
   let tracker = {};
   let tempDifference;

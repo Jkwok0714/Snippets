@@ -1,3 +1,8 @@
+/**
+ * @file The test file that tries out the custom Messenger class
+ * Created May 2 2018
+ */
+
 let Messenger = require('./Messenger.js');
 
 class Component {

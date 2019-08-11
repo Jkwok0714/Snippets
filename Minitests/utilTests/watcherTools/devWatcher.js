@@ -1,8 +1,8 @@
-/*
+/**
  * == Dev Watcher ==
  *
- * Watch for file changes and reflect them on a remote server for dev
- *
+ * @file Watch for file changes and reflect them on a remote server for dev
+ * Created Oct 8 2018
  */
 
 const { watch, stat, statSync, readdir } = require('fs');

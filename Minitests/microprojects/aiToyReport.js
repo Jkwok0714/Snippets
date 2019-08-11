@@ -1,8 +1,10 @@
 
-/*
+/**
  * AI Toy Report test
  * Interfaces with an old Flash project, no sense developing much
  * Condensed to one file
+ * @file Listen to data sent out by old Flash project "aiToy2009" and track results
+ * Created May 13 2019
  */
 
 const express = require('express');
@@ -13,14 +15,14 @@ const {
     existsSync
 } = require('fs');
 
-/**
+/*
  * 
  * Constants
  * 
  */
 const CONSTANTS = {
     SERVER_PORT: 4001,
-    FILE_NAME: 'aiToy.log', // pretty bad practice to use json, and then in a .log file lol
+    FILE_NAME: 'aiToy.log', /* pretty bad practice to use json, and then in a .log file lol */
     PERSIST_INTERVAL: 60 * 1000,
     ANALYTIC: '0_analytics',
     DATA_PER_ROW: 3,
@@ -50,7 +52,7 @@ const KEYS = {
     TOTAL_TEN_KILL_RUNS: 'totalTenKillRuns',
     TOTAL_MULTI_KILL_RUNS: 'totalMultiKillRuns',
     MULTI_KILL_RUNS: 'multiKillRuns',
-    HIGHEST_UNDER_50: 'highestUnder50' // assassins spawn past 50, making it a cutoff
+    HIGHEST_UNDER_50: 'highestUnder50' /* assassins spawn past 50, making it a cutoff */
 };
 const ACTIONS = {
     REPORT_KILL: 'reportKill',
@@ -66,7 +68,7 @@ let dataCache = {};
 let persistTimer;
 let touched = false;
 
-/** 
+/*
  * 
  * Handlers, helpers
  * 
@@ -240,7 +242,6 @@ const computeRollingAverage = (oldAvg, count, newData)  => {
     curr -= curr / count;
     curr += newData / count;
 
-    // console.log('rolling avg', oldAvg, '=>', curr, `(count ${count} newdata ${newData})`);
     return curr;
 };
 
@@ -254,8 +255,6 @@ const AnalyticsHandler = {
         const currAvg = dataCache[target][KEYS.AVG_KILLS];
         const currSpawn = dataCache[target][KEYS.CHARS_SPAWNED];
         setStat(target, KEYS.AVG_KILLS, computeRollingAverage(currAvg, currSpawn, newKills));
-
-        // setStat(target, KEYS.AVG_KILLS, hasData ? Math.floor((dataCache[target][KEYS.AVG_KILLS] + parseInt(newKills)) / 2) : +newKills);
     },
     updateCharsSpawned: () => {
         addStat(CONSTANTS.ANALYTIC, KEYS.CHARS_SPAWNED, 1);
@@ -299,7 +298,7 @@ const initRoutine = () => {
     });
 };
 
-/**
+/*
  * 
  * Reporting functions
  * 
@@ -395,17 +394,20 @@ const fill = () => {
     }
 }
 
-/**
+/*
  * 
  * Routes, listener
  * 
  */
 
+/**
+ * Start the Express server listening on SERVER_PORT
+ */
 const server = () => {
     const app = express();
     app.listen(CONSTANTS.SERVER_PORT, initRoutine);
     
-    /**
+    /*
      * ActionScript caller: loadVariablesNum("http://localhost:4001/report?data=test", 0);
      */
     app.get('/report', (req, res) => {
@@ -428,7 +430,7 @@ const server = () => {
         res.send('Invalid route to report.');
     });
     
-    /**
+    /*
      * Exit handler
      */
     process.on('SIGINT', () => {

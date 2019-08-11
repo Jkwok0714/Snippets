@@ -1,3 +1,8 @@
+/**
+ * @file Test  some Chrome APIs for tab targeting, captires, etc.
+ * Created Aug 27 2018
+ */
+
 const STATES = {
   QUERY_TABS: 0,
   CAPTURE_TABS: 1,

@@ -1,3 +1,8 @@
+/**
+ * @file Test a CSV parser algorithm
+ * Created Jan 21 2019
+ */
+
 const fs = require('fs');
 const { promisify } = require('util');
 
@@ -6,11 +11,19 @@ const readFile = promisify(fs.readFile);
 const csvPath = 'jasonsJsons/test.csv'
 const encoding = 'utf8';
 
+/**
+ * Load in a file to read
+ * @param {string} filePath 
+ */
 const readInFile = (filePath) => {
   return readFile(filePath, encoding);
 }
 
-/* By Andy VanWagoner, stackOverflow */
+/**
+ * CSV parsing function by Andy VanWagoner, from StackOverflow
+ * @param {string} csv 
+ * @param {string} reviver 
+ */
 function parseCsv(csv, reviver) {
     reviver = reviver || function(r, c, v) { return v; };
     var chars = csv.split(''), c = 0, cc = chars.length, start, end, table = [], row;
@@ -41,8 +54,9 @@ function parseCsv(csv, reviver) {
     return table;
 }
 
-/*
+/**
  * In our case we have user info; parse it
+ * @param {string} csvData
  */
 const convertToObjects = (csvData) => {
   let result = [];
@@ -61,7 +75,8 @@ const convertToObjects = (csvData) => {
   return result;
 };
 
-/*
+/**
+ * Main process runner
  * Does not handle entries in CSV where commas are part of the value
  */
 const main = () => {

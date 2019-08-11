@@ -1,3 +1,8 @@
+/**
+ * @file LRU Cache implementation. Wtf is this syntax
+ * Created Dec 20 2018
+ */
+
 let LRUCache = function (max) {
   this.storage = {};
   this.orderedKeys = [];

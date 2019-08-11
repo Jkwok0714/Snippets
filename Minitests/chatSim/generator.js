@@ -1,3 +1,8 @@
+/**
+ * @file A chats generator prototype for the Timder project
+ * Created Nov 3 2017
+ */
+
 var faker = require('faker');
 var Chance = require('chance');
 var chance = new Chance();

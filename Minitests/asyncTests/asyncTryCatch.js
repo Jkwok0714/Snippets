@@ -1,5 +1,6 @@
 /**
- * @file Using try-catch with asynnc operations thanks to the magic of async/await
+ * @file Proof of concept how async functions without async/await cannot be caught with try/catch
+ * Created Aug 27 2018
  */
 
  /**

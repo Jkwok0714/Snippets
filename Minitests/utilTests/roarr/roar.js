@@ -1,4 +1,7 @@
-// import log from 'roarr';
+/**
+ * @file Trying out the ROARR logging library
+ * Created Aug 6 2018
+ */
 const log = require('roarr').default;
 
 // console.log('LOG:', log, '--');

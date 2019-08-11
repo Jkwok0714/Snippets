@@ -1,4 +1,7 @@
-// var pino = require('pino')();
+/**
+ * @file Trying out the PINO logging library
+ * Created Aug 6 2018
+ */
 
 const pino = require('pino');
 const childProcess = require('child_process');
@@ -48,21 +51,6 @@ process.on('uncaughtException', (e) => {
 
 //
 log.info('hello world');
-// log.error('this is at error level');
-// pino.info('the answer is %d', 42)
-// pino.info({ obj: 42 }, 'hello world')
-// pino.info({ obj: 42, b: 2 }, 'hello world')
-// pino.info({ obj: { aa: 'bbb' } }, 'another')
-// setImmediate(function () {
-//   pino.info('after setImmediate')
-// })
-// log.error(new Error('an error'))
-//
-// var child = pino.child({ a: 'property' })
-// child.info('hello child!')
-//
-// var childsChild = child.child({ another: 'property' })
-// childsChild.info('hello baby..')
 
 const maxTicks = 20;
 let tick = 0;

@@ -1,3 +1,8 @@
+/**
+ * @file Main script of Chrome extension test
+ * Created Aug 13 2018
+ */
+
 // alert('I\'m having a nervous breakdown, drive me insane!');
 
 const pokeInterval = 20 * 1000;

@@ -1,4 +1,8 @@
-// ==== WATER TOWERS PROBLEM ====
+/**
+ * @file Water Towers interview practice problem: Find how many water blocks there can be in a tower configuration
+ * What is this Minecraft??
+ * Created Nov 22 2017
+ */
 
 let findWater = (towers) => {
   let tallestToLeft = [towers[0]];

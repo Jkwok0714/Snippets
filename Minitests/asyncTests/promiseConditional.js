@@ -1,5 +1,6 @@
 /**
  * @file Test conditional promise patterns
+ * Created Dec 6 2018
  */
 
 const UTIL = require('../utility');

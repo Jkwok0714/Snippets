@@ -1,3 +1,9 @@
+/**
+ * @file Invert a binary tree with a funfact about the problem
+ * At the time of adding this comment I probably can't do this anymore ;) Let's solve practical problems!
+ * Created Dev 23 2017
+ */
+
 // This problem was inspired by this original tweet by Max Howell:
 // Google: 90% of our engineers use the software you wrote (Homebrew)
 //  but you can’t invert a binary tree on a whiteboard so fuck off.

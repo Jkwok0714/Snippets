@@ -1,3 +1,8 @@
+/**
+ * @file A binary search attempt for practice by someone just starting out
+ * Created Aug 25 2017
+ */
+
 var runCount = 0;
 
 let binarySearch = function(arr, target, low, high) {

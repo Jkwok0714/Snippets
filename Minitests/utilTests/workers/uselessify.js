@@ -1,3 +1,8 @@
+/**
+ * @file A child process to do useless shit
+ * Created Aug 17 2018
+ */
+
 const nap = (time, callback) => {
     let stop = new Date().getTime();
     while(new Date().getTime() < stop + time) {

@@ -1,3 +1,5 @@
+# Testing PILLOWS. Created Aug 18 2018
+
 fn = './test2.jpg'
 
 from PIL import Image

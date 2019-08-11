@@ -1,3 +1,8 @@
+/**
+ * @file A preference generator prototype/thing I suppose
+ * Created Nov 1 2017
+ */
+
 let sdbmCode = function(str, salt, max = 100){
     var hash = 0;
     for (i = 0; i < str.length; i++) {

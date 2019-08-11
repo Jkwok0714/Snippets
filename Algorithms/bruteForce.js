@@ -1,3 +1,9 @@
+
+/**
+ * @file Trying out a terrible brute force guesser type mechanism
+ * Created  Sep 17 2017
+ */
+
 var password = 'Test+';
 var password36 = 'test1';
 var startI = 496080000;

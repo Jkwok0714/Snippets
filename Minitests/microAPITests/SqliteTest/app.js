@@ -1,3 +1,8 @@
+/**
+ * @file Trying out the usage of SQLite
+ * Created Apr 25 2018
+ */
+
 const sqlite = require('sqlite3').verbose();
 const db = new sqlite.Database('dbtest.db');
 let check;

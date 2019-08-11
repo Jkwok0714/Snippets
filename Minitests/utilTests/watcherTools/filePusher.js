@@ -1,3 +1,8 @@
+/**
+ * @file Push files to a remote target
+ * Created Oct 5 2018
+ */
+
 const Client = require('ssh2-sftp-client');
 const CONFIGS = require('./config');
 const UTIL = require('../utility');

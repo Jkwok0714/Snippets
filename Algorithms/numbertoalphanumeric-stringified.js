@@ -1,4 +1,7 @@
-//Turn 5000 to five thousand
+/**
+ * @file Toy problem practice: turning numbers to word versions e.g. 5000 -> five thousand
+ * Created Sep 1 2017
+ */
 
 var singleDigits = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
 var teens = ['', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];

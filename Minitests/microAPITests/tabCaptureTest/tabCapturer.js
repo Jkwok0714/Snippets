@@ -1,3 +1,8 @@
+/**
+ * @file Use the tab capture API in Chrome to get Media objects
+ * Created Aug 22 2018
+ */
+
 const defaultSize = {
     width: 1320,
     height: 900

@@ -1,5 +1,6 @@
 /**
- * Build a file list for a directory
+ * @file Build a file list for a directory
+ * Created Oct 8 2018
  */
 
 const { stat, statSync, readdir } = require('fs');

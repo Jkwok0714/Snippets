@@ -1,3 +1,8 @@
+/**
+ * @file Gracefully handle a close command by wrapping stuff up on the SIGINT signal
+ * Created Aug 17 2018
+ */
+
 console.log('Starting daily routine, press Ctrl-C to cancel');
 
 let explosions = setInterval(() => {

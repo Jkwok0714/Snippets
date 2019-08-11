@@ -1,3 +1,8 @@
+/**
+ * @file Trying out the BlueBird Promise API
+ * Created Sep 17 2017
+ */
+
 var Promise = require('bluebird');
 var request = Promise.promisifyAll(require('request'));
 var fs = Promise.promisifyAll(require('fs'));

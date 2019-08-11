@@ -1,3 +1,9 @@
+/**
+ * @file A messenger class to use as an emitter system to notify of events
+ * In actuality it was just made because some things seemed excessive to put in or notify through Redux for a React project
+ * Created May 2 2018
+ */
+
 let messages = {};
 
 class Messenger {

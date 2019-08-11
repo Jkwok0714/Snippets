@@ -1,3 +1,8 @@
+/**
+ * @file Test/demonstrate sending a task to a child process
+ * Created Aug 17 2018
+ */
+
 const cp = require('child_process');
 const uselessify = cp.fork(__dirname + '/uselessify');
 

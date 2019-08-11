@@ -1,5 +1,6 @@
 /**
- * @file Testing promise rejections??
+ * @file Testing promise rejections?? If only this were documented when it was made
+ * Created Aug 8 2018
  */
 
 console.log('\x1b[36m*** Start of file ***\x1b[0m');

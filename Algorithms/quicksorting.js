@@ -1,3 +1,8 @@
+/**
+ * @file Toy problem practice implementation of quick sorting.
+ * Created Aug 23 2017
+ */
+
 //=======================
 //  QUICK SORTING
 //=======================

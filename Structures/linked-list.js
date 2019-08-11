@@ -1,3 +1,8 @@
+/**
+ * @file An old AF attempt at linked list data structures from the very beginnings of time (relative to me doing JS)
+ * Created Aug 23 2017
+ */
+
 //herro
 
 //Test implementation of linked list from scratch

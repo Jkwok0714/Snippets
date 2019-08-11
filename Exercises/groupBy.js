@@ -1,3 +1,8 @@
+/**
+ * @file A GroupBy implementation that accepts a ket input to determine what to categorize
+ * Created Apr 26 2018
+ */
+
 let groupBy = (input, key) => {
   return input.reduce((accumulator, ele) => {
     //Push element to accumulator's object that is named by its requested key

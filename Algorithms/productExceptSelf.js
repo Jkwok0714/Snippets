@@ -1,3 +1,8 @@
+/**
+ * @file Interview practice with the product except self problem. Multiple versions with diff time efficiency
+ * Created Oct 20 2017
+ */
+
 var productExceptSelfN2Time = function(nums) {
     let result = [];
     for (var i = 0; i < nums.length; i++) {

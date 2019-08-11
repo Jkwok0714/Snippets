@@ -1,3 +1,8 @@
+/**
+ * @file Testing a  template building sort of system. Builds little HTML snippets
+ * Created Aug 17 2018
+ */
+
 const express = require('express');
 const htmlDir = __dirname;
 const { promisify } = require('util');

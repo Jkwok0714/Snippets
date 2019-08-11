@@ -1,3 +1,8 @@
+/**
+ * @file An AppCue-type component taken from a React-Typescript project
+ * Created May 12 2018
+ */
+
 import './AppcueComponent.scss';
 
 const NEXT_CUE_DELAY = 1000;
