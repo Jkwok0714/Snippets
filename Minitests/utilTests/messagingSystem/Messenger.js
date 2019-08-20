@@ -34,6 +34,17 @@ class Messenger {
   clear (eventName) {
     delete messages[eventName];
   }
+
+  getListeners () {
+    let res = {
+      totalListeners: 0
+    };
+    Object.keys(messages).forEach(key => {
+      res[key] = messages[key].length;
+      res.totalListeners += messages[key].length;
+    });
+    return res;
+  }
 }
 
 module.exports = new Messenger();
