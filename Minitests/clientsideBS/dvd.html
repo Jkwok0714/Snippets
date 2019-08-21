@@ -1,0 +1,200 @@
+<!-- Classic stuff. Created Aug 20 2019 -->
+
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Please Insert DVD</title>
+        <meta name="description" content="Please Insert DVD">
+        <meta name="author" content="DVD Media Authority">
+
+        <style>
+            body {
+                background-color: #202621;
+                position: relative;
+            }
+
+            .screen {
+                position: relative;
+                background-color: black;
+                width: 60vh;
+                height: 45vh;
+                margin: auto;
+                margin-top: 50vh;
+                transform: translateY(-50%);
+                border: 2px solid #211e1e;
+            }
+
+            .dvd {
+                text-align: center;
+                white-space: nowrap;
+                line-height: 1em;
+                position: absolute;
+                font-family: Arial, Helvetica, sans-serif;
+                font-style: italic;
+                font-weight: 600;
+                user-select: none;
+                -moz-user-select: none;
+            }
+
+            .icon {
+                font-size: 2em;
+            }
+        </style>
+
+        <script>
+            /** Updates per second */
+            const FPS = 24;
+            /** Speed to move stuff */
+            const PIXELS_PER_SECOND_SPEED = 80;
+            
+            /** Possible logo colors */
+            const COLORS = ['white', '#fcba03', '#07f71b', '#03b1fc', '#af08fc', '#ff0526'];
+            const PIXELS_PER_FRAME = PIXELS_PER_SECOND_SPEED / FPS;
+
+            /** Store info and state of the logo */
+            let DVD = {
+                color: '',
+                width: 0,
+                height: 0,
+                xPos: 0,
+                yPos: 0,
+                xMov: 0,
+                yMov: 0
+            };
+
+            /** Store info of the screen */
+            let SCREEN = {
+                width: 0,
+                height: 0
+            };
+
+            /** Hold a reference to the element */
+            let dvdElement;
+
+            /** Set a color from the possibilities */
+            const pickColor = () => {
+                const picked = COLORS[Math.floor(Math.random()  * COLORS.length)];
+                if (picked === DVD.color) return pickColor();
+                DVD.color = picked;
+                applyColorChanges();
+                return picked;
+            };
+            
+            /* Set an origin coordinate and direction */
+            const initDVD = () => {
+                getDVDDimensions();
+                pickColor();
+                placeDVDInit();
+            };
+
+            /** Place a position firmly inside the screen */
+            const placeDVDInit = () => {
+                DVD.xPos = Math.floor(Math.random() * (SCREEN.width - DVD.width));
+                DVD.yPos = Math.floor(Math.random() * (SCREEN.height - DVD.height));
+                DVD.xMov = Math.random() > .5 ? 1 : -1;
+                DVD.yMov = Math.random() > .5 ? 1 : -1;
+                applyPositionChanges();
+            };
+
+            /** Change its position and call detect bounds */
+            const moveDVD = () => {
+                DVD.xPos += DVD.xMov * PIXELS_PER_FRAME;
+                DVD.yPos += DVD.yMov * PIXELS_PER_FRAME;
+                detectBounds();
+                applyPositionChanges();
+            };
+
+            /** If an edge of the DVD has reached a bound reverse the direction and change color */
+            const detectBounds = () => {
+                let touched = false;
+                if (DVD.xPos - PIXELS_PER_FRAME <= 0) {
+                    DVD.xMov = 1;
+                    touched = true;
+                }
+                if (DVD.yPos - PIXELS_PER_FRAME <= 0) {
+                    DVD.yMov = 1;
+                    touched = true;
+                }
+                if (DVD.xPos + DVD.width + PIXELS_PER_FRAME >= SCREEN.width) {
+                    DVD.xMov = -1;
+                    touched = true;
+                }
+                if (DVD.yPos + DVD.height + PIXELS_PER_FRAME >= SCREEN.height) {
+                    DVD.yMov = -1;
+                    touched = true;
+                }
+                if (touched) pickColor();
+            };
+
+            /** Render the changes to the element */
+            const applyPositionChanges = () => {
+                const dvd = getDVDElement();
+                dvd.style.left = `${DVD.xPos}px`;
+                dvd.style.top = `${DVD.yPos}px`;
+            };
+
+            /** Get and store the size of the element on stage */
+            const getDVDDimensions = () => {
+                const dvd = getDVDElement();
+                DVD.height = dvd.clientHeight;
+                DVD.width = dvd.clientWidth;
+            };
+
+            /** Get and store the dimensions of the screen */
+            const getScreenDimensions = () => {
+                const screen = document.querySelector('.screen');
+                const rect = screen.getBoundingClientRect();
+                SCREEN.width = rect.right - rect.left;
+                SCREEN.height = rect.bottom - rect.top;
+            };
+
+            /** Change the CSS to apply changes */
+            const applyColorChanges = () => {
+                const dvd = getDVDElement();
+                dvd.style.color = DVD.color;
+            };
+
+            /** Get a reference to the icon */
+            const getDVDElement = () => {
+                if (!!dvdElement) {
+                    return dvdElement;
+                }  else {
+                    dvdElement = document.querySelector('.dvd');
+                    return dvdElement;
+                }
+            };
+
+            /** Start listening to screen dimension changes, etc. */
+            const setListeners = () => {
+                window.addEventListener('resize', getScreenDimensions);
+            };
+
+            /* Start a loop to move the DVD and render its changes */
+            const main = () => {
+                moveDVD();
+                // loop time: 1000 / FPS
+                setTimeout(main, 1000 / FPS);
+            };
+
+            window.onload = () => {
+                getScreenDimensions();
+                setListeners();
+                initDVD();
+                main();
+            };
+        </script>
+    </head>
+
+    <body>
+        <div class="screen">
+            <span class="dvd">
+                <span class="icon">☉</span>
+                <br />
+                VCD VIDEO
+            </span>
+        </div>
+    </body>
+</html>
