@@ -15,4 +15,4 @@ process.on('SIGINT', () => {
   setTimeout(() => {
     process.exit();
   }, 1000);
-} );
+});

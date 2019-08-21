@@ -1,0 +1,106 @@
+<!-- Figure out the orientation of a screen when accessed via mobile. Created May 10 2018 -->
+
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Pixel Builder</title>
+    <meta name="description" content="Pixel Builder">
+    <meta name="author" content="RetroGang RiseUp">
+
+    <style>
+        body {
+            background-color: black;
+        }
+
+        .container {
+            width: 90vmin;
+            height: 90vmin;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+
+        .pixel-row {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .pixel {
+            background-color: black;
+        }
+    </style>
+    <script>
+        const PIXELS = [
+            [100, 75, 25, 10, 5],
+            [75, 25, 10, 5, 0],
+            [25, 10, 5, 0, 0],
+            [10, 5, 0, 0, 0],
+            [5, 0, 0, 0, 0]
+        ];
+
+        let SCREEN = {
+            width: 0,
+            height: 0
+        };
+
+        /** Get pixel size of the container */
+        const getScreenDimensions = () => {
+                const screen = document.querySelector('.container');
+                const rect = screen.getBoundingClientRect();
+                SCREEN.width = rect.right - rect.left;
+                SCREEN.height = rect.bottom - rect.top;
+            };
+
+        /** Make a pixel node */
+        const createPixel = (opacity, size = 5) => {
+            if (opacity > 1) opacity = opacity / 100;
+            let pixel = document.createElement('div');
+            pixel.className = 'pixel';
+            pixel.setAttribute('style', `opacity: ${opacity}; width: ${size}px; height: ${size}px`);
+            return pixel;
+        };
+
+        /** Find how large each pixel should be */
+        const getPixelSize = (pixels) => {
+            let longestLength = Math.max(...[pixels.length].concat(pixels.map(a => a.length)));
+            return +((Math.min(SCREEN.width, SCREEN.height) / longestLength).toFixed(2));
+        };
+
+        /** Create the pixel nodes and slap them onto the DOM */
+        const renderPixels = (pixels) => {
+            const size = getPixelSize(pixels);
+            const cont = document.querySelector('.container');
+            pixels.forEach((row, i) => {
+                let rowDiv = document.createElement('div');
+                rowDiv.className = 'pixel-row';
+                row.forEach((rowElement, j) => {
+                    rowDiv.appendChild(createPixel(pixels[i][j], size));
+                });
+                cont.appendChild(rowDiv);
+            });
+        };
+
+        window.onload = () => {
+            getScreenDimensions();
+            renderPixels(PIXELS);
+        };
+    </script>
+
+</head>
+
+<body>
+    <div class="container">
+    </div>
+</body>
+
+</html>
