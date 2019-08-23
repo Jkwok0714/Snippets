@@ -139,4 +139,15 @@ const main = () => {
     highbrowForLoop(5, (i) => console.log(`Intellectual #${i}`));
 };
 
-main();
+if (!module.parent) main();
+
+module.exports = {
+    getUnion,
+    getIntersection,
+    uniqueGroups,
+    removeDuplicatePrimitives,
+    groupAndCount,
+    simpleSearch,
+    highbrowForLoop,
+    uniqueArrayByKey
+};
