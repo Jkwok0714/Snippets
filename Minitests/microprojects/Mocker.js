@@ -17,7 +17,8 @@ const FAKE_TYPES = {
     lastName: 'lastName',
     token: 'token',
     hexColor: 'hexColor',
-    company: 'company'
+    company: 'company',
+    fullName: 'fullName'
 }
 
 /**
@@ -46,6 +47,8 @@ class Mocker {
                 return Mocker.randomPluck(FIRST_NAMES);
             case FAKE_TYPES.lastName:
                 return Mocker.randomPluck(LAST_NAMES);
+            case FAKE_TYPES.fullName:
+                return `${Mocker.quickGenerate(FAKE_TYPES.firstName)} ${Mocker.quickGenerate(FAKE_TYPES.lastName)}`;
             case FAKE_TYPES.hexColor:
                 return  `#${Math.floor(Math.random() * 16777215).toString(16)}`;
             case FAKE_TYPES.eventDescription:
