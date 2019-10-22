@@ -83,6 +83,24 @@ class Utility {
     const max = Math.max(a, b);
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
+
+  /**
+   * A sync timeout that is blocking
+   * @param {number} duration In seconds
+   */
+  static blockThread (duration) {
+    const getSeconds = () => new Date().getTime() / 1000;
+
+    const start = getSeconds();
+    let done = false;
+    let current;
+
+    while (1 && !done) {
+      current = Math.round(getSeconds() - start);
+
+      if (current >= duration) done = true;
+    }
+  }
 }
 
 module.exports = Utility;
