@@ -1,3 +1,7 @@
+/**
+ * @file Test avoiding blocking processes by delegating to a child process, if even works on 1 core
+ * Created Oct 22 2019
+ */
 const UTIL = require('./utility/index');
 
 const BLOCK_FOR_SECOND = 4;

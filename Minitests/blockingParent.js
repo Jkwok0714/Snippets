@@ -1,3 +1,8 @@
+/**
+ * @file Test avoiding blocking processes by delegating to a child process, if even works on 1 core
+ * Created Oct 22 2019
+ */
+
 const { fork } = require('child_process');
 
 let timedTask = setInterval(() => console.log('[Parent] Time.'), 500);
