@@ -33,14 +33,30 @@ const unsafelyDoThingThatWillError = (notParseable) => {
   return resolve;
 }
 
-doThingThatWillError('}').then(res => {
-  console.log('No error caught', res);
-}).catch(err => {
-  console.error('\x1b[36mError caught safely in promise\x1b[0m', err);
-});
+const asyncAwaitIt = async () => {
+  try {
+    await doThingThatWillError();
+  } catch (e) {
+    console.error('\x1b[36mError caught safely in await-try-catch\x1b[0m', err);
+  }
+};
+
+asyncAwaitIt();
 
 setTimeout(() => {
   console.log('\x1b[32m## Got past unsafe test 1. Trying same thing without promises\x1b[0m');
+  doThingThatWillError('}').then(res => {
+    console.log('No error caught', res);
+  }).catch(err => {
+    console.error('\x1b[36mError caught safely in promise\x1b[0m', err);
+  });
+  // console.log('\x1b[32m## Got past unsafe test 2\x1b[0m');
+}, 500);
+
+
+
+setTimeout(() => {
+  console.log('\x1b[32m## Got past unsafe test 2. Trying same thing without promises\x1b[0m');
   unsafelyDoThingThatWillError('}');
-  console.log('\x1b[32m## Got past unsafe test 2\x1b[0m');
+  console.log('\x1b[32m## Got past unsafe test 3\x1b[0m');
 }, 1000);
