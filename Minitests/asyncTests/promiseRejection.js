@@ -10,15 +10,26 @@ process.on('uncaughtException', (e) => {
   process.exit(1);
 });
 
+const innerCallbackthing = (obj, callback) => {
+  setTimeout(() => {
+    callback(null, JSON.parse(obj));
+  }, 50);
+};
+
 const doThingThatWillError = (notParseable) => {
   return new Promise (resolve => {
-    let result = JSON.parse(notParseable);
-    resolve(result);
+    // let result = JSON.parse(notParseable);
+    innerCallbackthing(notParseable, (err, res) => {
+      resolve(res);
+    })
   });
 }
 
 const unsafelyDoThingThatWillError = (notParseable) => {
-  let result = JSON.parse(notParseable);
+  // let result = JSON.parse(notParseable);
+  innerCallbackthing(notParseable, (err, res) => {
+
+  });
   return resolve;
 }
 
