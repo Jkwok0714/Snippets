@@ -11,3 +11,5 @@ gitIgnoreThis/
 config.js
 config.py
 config.pyc
+
+*.webm
