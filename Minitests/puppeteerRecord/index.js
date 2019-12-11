@@ -32,6 +32,24 @@ const getExtId = async () => {
 }
 
 /**
+ * Do the youtube navigation stuff
+ * @param {puppeteer.Page} page 
+ */
+const handleYoutubing = async (page) => {
+    await page.goto('https://youtube.com', { waitUntil: 'networkidle2' });
+    await page.type('#search', 'Insomnium While We Sleep');
+    await page.click('button#search-icon-legacy');
+
+    await page.waitForSelector('ytd-thumbnail.ytd-video-renderer');
+
+    const videos = await page.$$('ytd-thumbnail.ytd-video-renderer');
+    await videos[0].click();
+    await page.waitForSelector('.html5-video-container');
+    await page.waitForSelector('button.ytp-ad-skip-button', { visible: true });
+    await page.click('button.ytp-ad-skip-button');
+};
+
+/**
  * Main runner
  * open browser, search a Youtube link, and invoke a recording
  */
@@ -60,28 +78,13 @@ const main = async () => {
         height: 720
     });
 
-    await page.goto('https://youtube.com', { waitUntil: 'networkidle2' });
-    await page.type('#search', 'Insomnium While We Sleep');
-    await page.click('button#search-icon-legacy');
-
-    await page.waitForSelector('ytd-thumbnail.ytd-video-renderer');
-
-    const videos = await page.$$('ytd-thumbnail.ytd-video-renderer');
-    await videos[0].click();
-    await page.waitForSelector('.html5-video-container');
-    await page.waitForSelector('button.ytp-ad-skip-button', { visible: true });
-    await page.click('button.ytp-ad-skip-button');
+    await handleYoutubing(page);
 
     const targets = await browser.targets();
     const backgroundPageTarget = targets.find(target => target.type() === 'background_page' && target.url().startsWith(`chrome-extension://${extensionId}/`));
     const backgroundPage = await backgroundPageTarget.page();
 
-    backgroundPage.on('console', msg => {
-        for (let i = 0; i < msg.args().length; i++) {
-            console.log(`${i}: ${msg.args()[i]}`);
-        }
-    });
-
+    /** Expose sendData so the data can be sent back to us */
     await backgroundPage.exposeFunction('sendData', (data) => {
         console.log('Send data called with expose functions');
         const buffer = new Buffer(data, 'binary');
@@ -90,6 +93,7 @@ const main = async () => {
         });
     });
 
+    /** Call the extension to start recording */
     await backgroundPage.evaluate(() => {
         startRecording();
         return Promise.resolve(42);
