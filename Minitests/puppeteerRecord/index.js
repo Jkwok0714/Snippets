@@ -1,3 +1,8 @@
+/**
+ * @file Attempt to record an automated tab into a video file
+ * Created Dec 6, 2019
+ */
+
 const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require('fs');

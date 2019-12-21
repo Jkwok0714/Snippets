@@ -1,3 +1,8 @@
+/**
+ * @file Investigating ways to construct objects with different patterns.
+ * Created Sep 3, 2019
+ */
+
 const Utility = require('../utility');
 const { inhabitants, locations } = require('../../junkData');
 const Mocker = require('../microprojects/Mocker');
