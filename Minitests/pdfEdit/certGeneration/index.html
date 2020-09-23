@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Generate Certificates</title>
+	<script>
+		const main = () => {};
+
+		window.onload = () => {
+			main();
+		}
+
+		const submit = () => {
+			const body = {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(formObject()),
+			};
+
+			fetch('generate', body).then(data => console.log(data));
+		};
+
+		const hexColor = () => '#' + (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
+
+		const pluck = arr => arr[Math.floor(Math.random() * arr.length)];
+
+		const formObject = () => {
+			const keys = ['name', 'event', 'date', 'host', 'innerColor', 'outerColor'];
+			let result = {};
+
+			keys.forEach(key => {
+				result[key] = document.querySelector(`#${key}`).value;
+			});
+
+			return result;
+		}
+
+		const fNames = ['Isaac', 'Serhiy', 'Belal', 'Nithin', 'Saroj', 'Tharinda', 'Mia', 'Vlad'];
+		const lNames = ['Zhang', 'Pavlov', 'Atiyyah', 'Prasad', 'Ghale', 'Lasitha', 'Mason', 'Kykot'];
+		const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+		const events = ['Training Session', 'Big Presentation', 'Important Meeting', 'Game Night', 'TEDx Talk'];
+		const hosts = ['Cisca', 'WebAxe', 'Zoon', 'SmallMarker', 'On12'];
+
+		const populate = () => {
+			document.querySelector('#name').value = `${pluck(fNames)} ${pluck(lNames)}`;
+			document.querySelector('#event').value = pluck(events);
+			document.querySelector('#date').value = `${pluck(months)} ${Math.floor(Math.random(28)) + 1}, 2020`;
+			document.querySelector('#host').value = `${pluck(hosts)} Events`;
+
+			document.querySelector('#innerColor').value = hexColor();
+			document.querySelector('#outerColor').value = hexColor();
+			colorChanged();
+		};
+
+		const colorChanged = () => {
+			const innerColor = document.querySelector('#innerColor').value;
+			const outerColor = document.querySelector('#outerColor').value;
+
+			document.querySelector('#innerColor').style.border = `1px solid ${innerColor}`;
+			document.querySelector('#outerColor').style.border = `1px solid ${outerColor}`;
+		};
+	</script>
+</head>
+
+<body>
+	<h1>Generate Custom Certificate</h1>
+	<h3>Attendee Name</h3>
+	<input id="name" type="text" placeholder="Attendee Name"></input>
+	<h3>Event Title</h3>
+	<input id="event" type="text" placeholder="Event Name"></input>
+	<h3>Event Date</h3>
+	<input id="date" type="text" placeholder="Event Date"></input>
+	<h3>Host Name</h3>
+	<input id="host" type="text" placeholder="Host Name"></input>
+	<h3>Inner Border Color</h3>
+	<input id="innerColor" type="text" onblur="colorChanged()" value="#33A6C3"></input>
+	<h3>Outer Border Color</h3>
+	<input id="outerColor" type="text" onblur="colorChanged()" value="#66BCD2"></input>
+	<br /><br />
+	<button onclick="populate()">Auto-Populate</button>
+	<button onclick="submit()">Generate</button>
+</body>
+
+</html>
