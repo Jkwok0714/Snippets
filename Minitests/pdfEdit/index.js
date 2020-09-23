@@ -1,16 +1,51 @@
-const PDFParser = require('pdf2json');
+// const PDFParser = require('pdf2json');
+const { exec } = require('child_process');
+const fs = require('fs');
+const { promisify } = require('util');
 
-const main = () => {
-	let pdfParser = new PDFParser();
+const unlink = promisify(fs.unlink);
 
-	pdfParser.on("pdfParser_dataError", errData => console.error(errData.parserError));
-	pdfParser.on("pdfParser_dataReady", pdfData => {
-		console.log(pdfData, 'page data:',
-			pdfData.formImage.Pages[0]);
-		// fs.writeFile("./pdf2json/test/F1040EZ.json", JSON.stringify(pdfData));
+// const main = () => {
+// 	let pdfParser = new PDFParser();
+
+// 	pdfParser.on("pdfParser_dataError", errData => console.error(errData.parserError));
+// 	pdfParser.on("pdfParser_dataReady", pdfData => {
+// 		console.log(pdfData, 'page data:',
+// 			pdfData.formImage.Pages[0]);
+// 		// fs.writeFile("./pdf2json/test/F1040EZ.json", JSON.stringify(pdfData));
+// 	});
+
+// 	pdfParser.loadPDF("./sample.pdf");
+// };
+
+const runExec = async (command) => {
+	const jobId = Math.floor(Math.random()*100);
+	return new Promise((resolve, reject) => {
+		console.log(`[exec ${jobId}]: ${command}`);
+		exec(command, (error, stdout, stderr) => {
+			if (error) reject(error);
+			console.log(`[exec ${jobId}] ${stdout}`);
+
+			resolve(stdout);
+		});
 	});
+};
 
-	pdfParser.loadPDF("./sample.pdf");
+// sudo yum install pdftk libgcj
+
+const main = async () => {
+	const IN_FILE = 'sample.pdf';
+	const TEMP_FILE = 'temp.pdf';
+	const OUTPUT_FILE = `output_${Date.now()}.pdf`;
+
+	const BEFORE_TEXT = 'certificate';
+	const AFTER_TEXT = 'Umu';
+
+	await runExec(`pdftk ${IN_FILE} output ${TEMP_FILE} uncompress`);
+	await runExec(`sed -i 's/${BEFORE_TEXT}/${AFTER_TEXT}/g' ${TEMP_FILE}`);
+	await runExec(`pdftk ${TEMP_FILE} output ${OUTPUT_FILE} compress`);
+	await unlink(TEMP_FILE);
+	console.log('Done');
 };
 
 main();
