@@ -34,11 +34,13 @@
 				result[key] = document.querySelector(`#${key}`).value;
 			});
 
+			if (document.querySelector('#use-p').checked) result.puppeteer = 1;
+
 			return result;
 		}
 
-		const fNames = ['Isaac', 'Serhiy', 'Belal', 'Nithin', 'Saroj', 'Tharinda', 'Mia', 'Vlad'];
-		const lNames = ['Zhang', 'Pavlov', 'Atiyyah', 'Prasad', 'Ghale', 'Lasitha', 'Mason', 'Kykot'];
+		const fNames = ['Isaac', 'Serhiy', 'Belal', 'Nithin', 'Saroj', 'Tharinda', 'Mia', 'Vlad', 'Jeff'];
+		const lNames = ['Zhang', 'Pavlov', 'Atiyyah', 'Prasad', 'Ghale', 'Lasitha', 'Mason', 'Kykot', 'Hildack'];
 		const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 		const events = ['Training Session', 'Big Presentation', 'Important Meeting', 'Game Night', 'TEDx Talk'];
 		const hosts = ['Cisca', 'WebAxe', 'Zoon', 'SmallMarker', 'On12'];
@@ -78,6 +80,9 @@
 	<input id="innerColor" type="text" onblur="colorChanged()" value="#33A6C3"></input>
 	<h3>Outer Border Color</h3>
 	<input id="outerColor" type="text" onblur="colorChanged()" value="#66BCD2"></input>
+	<br /><br />
+	<input type="checkbox" id="use-p"></input>
+	<label for="use-p">Use Puppeteer</label>
 	<br /><br />
 	<button onclick="populate()">Auto-Populate</button>
 	<button onclick="submit()">Generate</button>

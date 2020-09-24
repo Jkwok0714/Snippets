@@ -1,3 +1,8 @@
+/**
+ * @File Try scan PDF and change the text. Try and fail, do or do not there is no try is a lie
+ * Created Sep 22 2020
+ */
+
 // const PDFParser = require('pdf2json');
 const { exec } = require('child_process');
 const fs = require('fs');
