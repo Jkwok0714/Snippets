@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Certificate</title>
+	<style>
+		body {
+			height: 730px;
+			/* height: 100vh; */
+			width: 1180px;
+			font-family: 'Times New Roman', Times, serif;
+		}
+		.container {
+			/* height: 563px; */
+    		/* width: 975px; */
+			height: 100%;
+			width: 100%;
+			padding: 32px;
+    		box-sizing: border-box;
+		}
+
+		.main {
+			height: 100%;
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-evenly;
+		}
+
+		h1, .attendee {
+			text-align: center;
+		}
+
+		h1 {
+			font-size: 40px;
+		}
+
+		.provider {
+			position: absolute;
+			font-size: 2em;
+			bottom: 3em;
+			padding: 20px 55px;
+		}
+	</style>
+</head>
+
+<body>
+	<section class="container">
+		<section class="main" style="border: 7px solid *(#33A6C3)*; outline: 3px solid *(#66BCD2)*">
+			<h1>Certificate of Attendance</h1>
+			<div class="attendee">
+				This certifies that <br />
+				<h2>*(ATTENDEE_NAME)*</h2>
+				is awarded this certificate for attending the event
+				<h3>*(EVENT_NAME)*</h3>
+				on *(EVENT_DATE)*
+			</div>
+			<div class="provider">
+				*(HOST_NAME)*
+			</div>
+		</section>
+	</section>
+</body>
+
+</html>
