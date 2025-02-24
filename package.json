@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/Jkwok0714/Snippets#readme",
   "dependencies": {
-    "aws-sdk": "^2.140.0",
+    "aws-sdk": "^2.814.0",
     "bluebird": "^3.5.0",
     "body-parser": "^1.19.0",
     "chance": "^1.0.12",
