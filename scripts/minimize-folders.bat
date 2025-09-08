@@ -13,7 +13,9 @@ for /d %%d in (*) do (
         REM Count files in the directory.
         set "count=0"
         for /f %%c in ('dir /b /a-d "!folderName!" 2^>nul ^| find /c /v ""') do set "count=%%c"
-        
+
+        timeout /t 5 >nul
+
         echo Processing folder: "!folderName!", File count: !count!
         
         REM Check if file count is 100 or more.
@@ -44,3 +46,4 @@ for /d %%d in (*) do (
 echo.
 echo Script finished.
 endlocal
+pause
