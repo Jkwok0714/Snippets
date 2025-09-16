@@ -21,29 +21,29 @@ for /d %%d in (*) do (
         REM Check if file count is 100 or more.
         if !count! geq 100 (
             echo Folder "!folderName!" has 100 or more files. Archiving...
-            set "oldFolderName=!folderName!-old"
+            set "targetFolderName=!folderName!-old"
             
             REM Create the "-old" directory if it doesn't exist.
-            if not exist "!oldFolderName!" (
-          echo Creating directory: "!oldFolderName!"
-          md "!oldFolderName!"
+            if not exist "!targetFolderName!" (
+          echo Creating directory: "!targetFolderName!"
+          md "!targetFolderName!"
             )
             
-            echo Moving files from "!folderName!" to "!oldFolderName!"
+            echo Moving files from "!folderName!" to "!targetFolderName!"
             REM Iterate over files and move them one by one, printing the name.
             for %%f in ("!folderName!\*") do (
               echo Moving file: "%%~nxf"
-              move "%%f" "!oldFolderName!\" >nul
+              move "%%f" "!targetFolderName!\" >nul
             )
         ) else (
             echo Folder "!folderName!" has less than 100 files. No action taken.
         )
 
-        if defined oldFolderName (
+        if defined targetFolderName (
             set "oldFolderCount=0"
-            for /f %%c in ('dir /b /a-d "!oldFolderName!" 2^>nul ^| find /c /v ""') do set "oldFolderCount=%%c"
-            echo Current file count in "!oldFolderName!": !oldFolderCount!
-            set "oldFolderName="
+            for /f %%c in ('dir /b /a-d "!targetFolderName!" 2^>nul ^| find /c /v ""') do set "oldFolderCount=%%c"
+            echo Current file count in "!targetFolderName!": !oldFolderCount!
+            set "targetFolderName="
         )
     ) else (
         echo Ignoring folder: "!folderName!"

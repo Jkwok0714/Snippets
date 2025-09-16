@@ -5,6 +5,10 @@
 node_modules/
 npm-debug.log
 
+## JAVA ##
+**/.gradle/
+**/build/
+
 *.log
 *.zip
 gitIgnoreThis/
