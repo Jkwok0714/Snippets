@@ -38,6 +38,13 @@ for /d %%d in (*) do (
         ) else (
             echo Folder "!folderName!" has less than 100 files. No action taken.
         )
+
+        if defined oldFolderName (
+            set "oldFolderCount=0"
+            for /f %%c in ('dir /b /a-d "!oldFolderName!" 2^>nul ^| find /c /v ""') do set "oldFolderCount=%%c"
+            echo Current file count in "!oldFolderName!": !oldFolderCount!
+            set "oldFolderName="
+        )
     ) else (
         echo Ignoring folder: "!folderName!"
     )
