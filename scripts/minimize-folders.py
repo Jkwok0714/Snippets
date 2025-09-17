@@ -32,8 +32,6 @@ def minimize_folders(file_count_threshold=100):
                 print(f"Checking folder: '{item_name}', File count: {file_count}")
 
                 if file_count >= file_count_threshold:
-                    print(f"Folder '{item_name}' has {file_count_threshold} or more files. Archiving...")
-
                     # Define the target directory name and path
                     target_folder_name = f"{item_name}-old"
                     target_folder_path = os.path.join(current_directory, target_folder_name)
@@ -41,7 +39,8 @@ def minimize_folders(file_count_threshold=100):
                     # Create the target directory if it doesn't exist
                     os.makedirs(target_folder_path, exist_ok=True)
 
-                    print(f"Moving files from '{item_name}' to '{target_folder_name}'...")
+                    print(f"Folder '{item_name}' has {file_count_threshold} or more files. Archiving to {target_folder_name}")
+
                     # Move each file to the target directory
                     moved_count = 0
                     for file_to_move in files:
@@ -49,9 +48,10 @@ def minimize_folders(file_count_threshold=100):
                         destination_path = os.path.join(target_folder_path, file_to_move)
                         try:
                             shutil.move(source_path, destination_path)
+                            print(f"> Moved '{file_to_move}' to '{target_folder_name}'")
                             moved_count += 1
                         except Exception as e:
-                            print(f"Failed to move '{file_to_move}': {e}")
+                            print(f"> ⚠️ Failed to move '{file_to_move}': {e}")
 
                     if moved_count:
                         moved_summary[item_name] = moved_count
@@ -79,7 +79,7 @@ if __name__ == "__main__":
     print("\nScript finished.")
 
     if summary:
-        print("\nSummary:")
+        print("\n=== Summary ===")
         for folder, count in summary.items():
             print(f"[{folder}]: {count} files moved")
     else:
